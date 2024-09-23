@@ -1,7 +1,7 @@
 interface IInputProps extends React.InputHTMLAttributes<HTMLInputElement> {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   setValue: React.Dispatch<React.SetStateAction<any>>;
-  label: string;
+  label?: string;
   error?: string;
 }
 

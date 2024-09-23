@@ -7,11 +7,13 @@ import Login from "./pages/Login";
 import axios from "axios";
 import Channels from "./pages/Channels";
 import ProtectedRoute from "./guard/PrivateRoute";
+import SideBar from "./components/layout/SideBar";
 function App() {
   axios.defaults.withCredentials = true;
 
   return (
     <>
+      <SideBar />
       <Routes>
         <Route element={<ProtectedRoute />}>
           <Route index element={<Channels />} path={routes.CHANNEL} />

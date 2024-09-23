@@ -12,8 +12,8 @@ const SideBar = () => {
   const [searchValue, setSearchValue] = useState<string>("");
 
   return (
-    <div className="flex bg-primary-gray max-w-80 py-2">
-      <section className="flex flex-col items-center gap-2">
+    <div className="flex bg-primary-gray min-w-80">
+      <section className="flex flex-col items-center gap-2 py-2">
         <div className="bg-primary-blue max-w-12 min-w-12 aspect-square rounded-lg cursor-pointer"></div>
         <ChannelsList />
       </section>
@@ -28,7 +28,7 @@ const SideBar = () => {
         <section className="mt-2">
           <NavLink
             className="flex gap-3 items-center text-white w-full hover:bg-secondary-gray p-2 rounded-md active:bg-secondary-gray"
-            to={routes.FRIENDS}
+            to={routes.CHANNEL}
           >
             <FaUserFriends size={30} />
             Friends

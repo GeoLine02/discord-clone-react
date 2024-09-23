@@ -1,5 +1,10 @@
 const Channels = () => {
-  return <div>Channels</div>;
+  return (
+    <div className="">
+      {/* <section>123</section>
+      <section>123</section> */}
+    </div>
+  );
 };
 
 export default Channels;

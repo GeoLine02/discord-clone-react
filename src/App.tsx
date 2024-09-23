@@ -8,21 +8,25 @@ import axios from "axios";
 import Channels from "./pages/Channels";
 import ProtectedRoute from "./guard/PrivateRoute";
 import SideBar from "./components/layout/SideBar";
+import Header from "./components/layout/Header";
 function App() {
   axios.defaults.withCredentials = true;
 
   return (
-    <>
+    <div className="flex max-w-[100vw] max-h-[100vh]">
       <SideBar />
-      <Routes>
-        <Route element={<ProtectedRoute />}>
-          <Route index element={<Channels />} path={routes.CHANNEL} />
-        </Route>
-        <Route element={<Home />} path={routes.HOME} />
-        <Route element={<Register />} path={routes.REGISTER} />
-        <Route element={<Login />} path={routes.LOGIN} />
-      </Routes>
-    </>
+      <div className="w-full">
+        <Header />
+        <Routes>
+          <Route element={<ProtectedRoute />}>
+            <Route index element={<Channels />} path={routes.CHANNEL} />
+          </Route>
+          <Route element={<Home />} path={routes.HOME} />
+          <Route element={<Register />} path={routes.REGISTER} />
+          <Route element={<Login />} path={routes.LOGIN} />
+        </Routes>
+      </div>
+    </div>
   );
 }
 

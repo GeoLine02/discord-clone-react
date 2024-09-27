@@ -1,5 +1,7 @@
+import { useNavigate } from "react-router-dom";
 import { IUserLoginCrdentials } from "../../types/user";
 import Input from "../ui/Input";
+import routes from "../../constants/routes";
 
 interface ILoginFormProps {
   SetUserCredentials: React.Dispatch<
@@ -16,6 +18,8 @@ const LoginForm = ({
   loading,
   userCredentialsError,
 }: ILoginFormProps) => {
+  const navigate = useNavigate();
+
   return (
     <div>
       <form className="flex flex-col gap-5" onSubmit={handleLogin}>
@@ -47,7 +51,13 @@ const LoginForm = ({
             Login
           </button>
           <p>
-            Need an account? <span className="text-primary-blue">Register</span>
+            Need an account?
+            <span
+              onClick={() => navigate(routes.REGISTER)}
+              className="text-primary-blue cursor-pointer"
+            >
+              Register
+            </span>
           </p>
         </div>
       </form>

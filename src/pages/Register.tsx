@@ -2,7 +2,7 @@ import { useState } from "react";
 import ReigsterForm from "../components/forms/ReigsterForm";
 import { IUserRegisterCredentials } from "../types/user";
 import { reigsterUser } from "../services/users";
-import { AxiosResponse } from "axios";
+import axios, { AxiosResponse } from "axios";
 import HeroImage from "../assets/HeroImage.svg";
 import { useNavigate } from "react-router-dom";
 import { IoIosArrowBack } from "react-icons/io";
@@ -28,7 +28,6 @@ const Register = () => {
     });
 
   const [loading, setLoading] = useState<boolean>(false);
-  const [registrationResult, setrRegistrationResult] = useState<string>("");
 
   const navigate = useNavigate();
 
@@ -46,14 +45,13 @@ const Register = () => {
 
       if (isValid) {
         const resp = await reigsterUser(userCredentials);
-        console.log(userCredentialsError);
-        setrRegistrationResult(resp);
+        console.log("response: ", resp);
         return resp;
       } else {
         setUserCredentialsError(errors);
       }
     } catch (error) {
-      console.log(error);
+      console.log("err ", error);
     } finally {
       setLoading(false);
     }
@@ -71,7 +69,6 @@ const Register = () => {
         </div>
         <ReigsterForm
           loading={loading}
-          registrationResult={registrationResult}
           handleRegister={handleRegister}
           setUserCredentials={setUserCredentials}
           userCredentialsError={userCredentialsError}

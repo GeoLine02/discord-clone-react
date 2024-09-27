@@ -12,7 +12,6 @@ interface IRegisterFormProps {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
   ) => Promise<AxiosResponse<any> | undefined>;
   loading: boolean;
-  registrationResult: string;
   userCredentialsError: IUserRegisterCredentials;
 }
 
@@ -20,7 +19,6 @@ const ReigsterForm = ({
   loading,
   setUserCredentials,
   handleRegister,
-  registrationResult,
   userCredentialsError,
 }: IRegisterFormProps) => {
   return (
@@ -37,7 +35,7 @@ const ReigsterForm = ({
         error={userCredentialsError.username}
         required
         label="username"
-        name="usrname"
+        name="username"
         setValue={setUserCredentials}
       />
       <Input
@@ -55,7 +53,6 @@ const ReigsterForm = ({
         type="password"
         setValue={setUserCredentials}
       />
-      <h1 className="text-center text-sm">{registrationResult}</h1>
       <button
         disabled={loading}
         className="w-full p-2 bg-primary-blue rounded hover:bg-opacity-70 disabled:bg-opacity-70"

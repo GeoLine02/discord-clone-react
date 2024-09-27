@@ -6,3 +6,5 @@ export interface IUserRegisterCredentials extends IUserLoginCrdentials {
   username: string;
   displayName: string;
 }
+
+export type IUser = IUserRegisterCredentials;

@@ -6,9 +6,12 @@ import {
   useContext,
 } from "react";
 import api from "../config/axios";
-
+import { io } from "socket.io-client";
+import { IUser } from "../types/user";
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const AuthContext = createContext<any>(undefined);
+// eslint-disable-next-line react-refresh/only-export-components
+export const socket = io(import.meta.env.VITE_APP_API_BASE_URL);
 
 // eslint-disable-next-line react-refresh/only-export-components
 export const useAuth = () => {
@@ -22,7 +25,10 @@ export const useAuth = () => {
 
 const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const [token, setToken] = useState<undefined | null | string>();
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState<null | IUser>(null);
+
+  console.log("user nameeeeeeeee: ", user?.username);
+
   useEffect(() => {
     const fetchUser = async () => {
       try {
@@ -30,6 +36,10 @@ const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 
         setToken(response.data.accessToken);
         setUser(response.data.user);
+
+        if (response.data.user) {
+          socket.emit("register", response.data.user.username);
+        }
       } catch {
         setToken(null);
       }

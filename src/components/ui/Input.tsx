@@ -12,7 +12,6 @@ const Input = ({ setValue, label, error, ...rest }: IInputProps) => {
       [e.target.name]: e.target.value,
     }));
   };
-  console.log("suerErrors: ", error);
   return (
     <div>
       {label && (

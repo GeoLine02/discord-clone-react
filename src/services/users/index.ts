@@ -3,6 +3,7 @@ import {
   IUserRegisterCredentials,
 } from "../../types/user";
 import api from "../../config/axios";
+import axios, { AxiosError } from "axios";
 
 export const authorizeUser = async (userCredentials: IUserLoginCrdentials) => {
   try {
@@ -26,9 +27,12 @@ export const reigsterUser = async (
         "Content-Type": "application/json",
       },
     });
-    console.log(resp);
-    return resp.data.message;
-  } catch (error) {
+
+    if (resp) {
+      // this response logs undefined if user uses aleady used email
+      return resp;
+    }
+  } catch (error: any) {
     console.log(error);
   }
 };

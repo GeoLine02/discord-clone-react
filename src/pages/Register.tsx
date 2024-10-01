@@ -28,7 +28,6 @@ const Register = () => {
     });
 
   const [loading, setLoading] = useState<boolean>(false);
-  const [registrationResult, setrRegistrationResult] = useState<string>("");
 
   const navigate = useNavigate();
 
@@ -46,14 +45,31 @@ const Register = () => {
 
       if (isValid) {
         const resp = await reigsterUser(userCredentials);
-        console.log(userCredentialsError);
-        setrRegistrationResult(resp);
+
+        if (resp?.data.message === "Username is already in use") {
+          setUserCredentialsError({
+            displayName: "",
+            email: "",
+            password: "",
+            username: resp.data.message,
+          });
+        }
+
+        if (resp?.data.message === "Email is already in use") {
+          setUserCredentialsError({
+            displayName: "",
+            email: resp.data.message,
+            password: "",
+            username: "",
+          });
+        }
+
         return resp;
       } else {
         setUserCredentialsError(errors);
       }
     } catch (error) {
-      console.log(error);
+      console.log("err ", error);
     } finally {
       setLoading(false);
     }
@@ -71,7 +87,6 @@ const Register = () => {
         </div>
         <ReigsterForm
           loading={loading}
-          registrationResult={registrationResult}
           handleRegister={handleRegister}
           setUserCredentials={setUserCredentials}
           userCredentialsError={userCredentialsError}

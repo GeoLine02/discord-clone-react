@@ -24,8 +24,6 @@ const FriendRequestsProvider = ({
   const [friendList, setFriendList] = useState<any>([]);
   const [onlineFrindsList, setOnlineFriendsList] = useState<any>([]);
 
-  console.log(friendRequests);
-  console.log("friendList: ", friendList);
   const { user } = useAuth();
 
   useEffect(() => {
@@ -41,7 +39,6 @@ const FriendRequestsProvider = ({
       try {
         if (user) {
           const res = await getFriendList(user.id);
-          console.log("frindsResponse: ", res);
           setFriendList(res);
           return res;
         }

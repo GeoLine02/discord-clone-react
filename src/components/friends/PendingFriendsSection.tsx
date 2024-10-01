@@ -16,7 +16,6 @@ const PendingFriendsSection = () => {
     try {
       const receiverId = user?.id;
       const res = await acceptFriendRequest(senderId, receiverId);
-      console.log("accept ressponse: ", res);
       const newFriend = friendRequests?.find(
         (request) => request.Sender.id === senderId
       );

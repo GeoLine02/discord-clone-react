@@ -63,7 +63,9 @@ const Register = () => {
             username: "",
           });
         }
-
+        if (resp?.data.message === "User created successfuly") {
+          navigate(routes.LOGIN);
+        }
         return resp;
       } else {
         setUserCredentialsError(errors);

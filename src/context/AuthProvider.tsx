@@ -27,8 +27,6 @@ const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const [token, setToken] = useState<undefined | null | string>();
   const [user, setUser] = useState<null | IUser>(null);
 
-  console.log("user nameeeeeeeee: ", user?.username);
-
   useEffect(() => {
     const fetchUser = async () => {
       try {

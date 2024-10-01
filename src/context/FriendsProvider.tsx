@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useState, useEffect, useContext, createContext } from "react";
 import { useAuth, socket } from "./AuthProvider";
-import { getAllFriendRequests } from "../services/friends";
+import { getAllFriendRequests, getFriendList } from "../services/friends";
 import { IFriendRequest } from "../types/friends";
 
 const FriendsContext = createContext<any>(undefined);
@@ -21,8 +21,37 @@ const FriendRequestsProvider = ({
   children: React.ReactNode;
 }) => {
   const [friendRequests, setFriendRequests] = useState<any>([]);
+  const [friendList, setFriendList] = useState<any>([]);
+  const [onlineFrindsList, setOnlineFriendsList] = useState<any>([]);
+
   console.log(friendRequests);
+  console.log("friendList: ", friendList);
   const { user } = useAuth();
+
+  useEffect(() => {
+    if (user) {
+      socket.on("get-online-friends", (onlineFriends) => {
+        setOnlineFriendsList((prev) => [...prev, onlineFriends]);
+      });
+    }
+  }, [user]);
+
+  useEffect(() => {
+    const fetchFriends = async () => {
+      try {
+        if (user) {
+          const res = await getFriendList(user.id);
+          console.log("frindsResponse: ", res);
+          setFriendList(res);
+          return res;
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    fetchFriends();
+  }, [user]);
 
   useEffect(() => {
     const fetchAllFriendRequests = async () => {
@@ -38,10 +67,10 @@ const FriendRequestsProvider = ({
     if (user) {
       socket.on(
         "receive-friend-request",
-        (senderUsername, receiverUsername, senderId, status) => {
+        (Sender, senderUsername, receiverUsername, senderId, status) => {
           if (senderUsername && senderId) {
             const request: IFriendRequest = {
-              Sender: { username: senderUsername },
+              Sender,
               senderId,
               status,
             };
@@ -52,8 +81,25 @@ const FriendRequestsProvider = ({
     }
   }, [user]);
 
+  useEffect(() => {
+    if (user) {
+      socket.on("friend-request-accepted", (user) => {
+        if (user) {
+          setFriendList((prev) => [...prev, user]);
+        }
+      });
+    }
+  }, [user]);
+
   return (
-    <FriendsContext.Provider value={{ friendRequests }}>
+    <FriendsContext.Provider
+      value={{
+        friendRequests,
+        friendList,
+        setFriendList,
+        setFriendRequests,
+      }}
+    >
       {children}
     </FriendsContext.Provider>
   );

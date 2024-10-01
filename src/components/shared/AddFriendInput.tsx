@@ -19,11 +19,7 @@ const AddFriendInput = () => {
       });
       setSendingStatus(res.message);
       return res;
-    } catch (error: any) {
-      console.log("@@@@@@@@@@@@@@@@@@@@@: ", error.message);
-      // if (error.message === "Friend request already sent") {
-      //   setSendingStatus(error.message);
-      // }
+    } catch (error) {
       console.log(error);
     }
   };

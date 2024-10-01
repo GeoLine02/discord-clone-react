@@ -3,7 +3,7 @@ import {
   IUserRegisterCredentials,
 } from "../../types/user";
 import api from "../../config/axios";
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 
 export const authorizeUser = async (userCredentials: IUserLoginCrdentials) => {
   try {

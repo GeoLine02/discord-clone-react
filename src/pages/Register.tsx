@@ -2,7 +2,7 @@ import { useState } from "react";
 import ReigsterForm from "../components/forms/ReigsterForm";
 import { IUserRegisterCredentials } from "../types/user";
 import { reigsterUser } from "../services/users";
-import axios, { AxiosResponse } from "axios";
+import { AxiosResponse } from "axios";
 import HeroImage from "../assets/HeroImage.svg";
 import { useNavigate } from "react-router-dom";
 import { IoIosArrowBack } from "react-icons/io";
@@ -45,7 +45,25 @@ const Register = () => {
 
       if (isValid) {
         const resp = await reigsterUser(userCredentials);
-        console.log("response: ", resp);
+
+        if (resp?.data.message === "Username is already in use") {
+          setUserCredentialsError({
+            displayName: "",
+            email: "",
+            password: "",
+            username: resp.data.message,
+          });
+        }
+
+        if (resp?.data.message === "Email is already in use") {
+          setUserCredentialsError({
+            displayName: "",
+            email: resp.data.message,
+            password: "",
+            username: "",
+          });
+        }
+
         return resp;
       } else {
         setUserCredentialsError(errors);

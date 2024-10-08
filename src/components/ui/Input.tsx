@@ -3,28 +3,39 @@ interface IInputProps extends React.InputHTMLAttributes<HTMLInputElement> {
   setValue: React.Dispatch<React.SetStateAction<any>>;
   label?: string;
   error?: string;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  value: any;
 }
 
-const Input = ({ setValue, label, error, ...rest }: IInputProps) => {
+const Input = ({ value, setValue, label, error, ...rest }: IInputProps) => {
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setValue((prev: object) => ({
-      ...prev,
-      [e.target.name]: e.target.value,
-    }));
+    if (typeof value === "object") {
+      setValue((prev: object) => ({
+        ...prev,
+        [e.target.name]: e.target.value,
+      }));
+    } else if (typeof value === "string") {
+      setValue(e.target.value);
+    }
   };
+
   return (
     <div>
-      {label && (
-        <label className="text-sm" htmlFor={rest.name}>
-          {label}
-        </label>
-      )}
+      <div>
+        {label && (
+          <label className="text-sm" htmlFor={rest.name}>
+            {label}
+          </label>
+        )}
+      </div>
       <input
         className="bg-primary-gray p-2 rounded-md w-full outline-none focus:outline-primary-blue mt-1"
         type={rest.type}
         placeholder={rest.placeholder}
         onChange={onChange}
         name={rest.name}
+        value={value}
+        {...rest}
       />
       {error && <span className="text-red-600 text-sm">{error}</span>}
     </div>

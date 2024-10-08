@@ -9,6 +9,20 @@ export default {
         "secondary-gray": "#313338",
         "hover-gray": "#393C41",
       },
+      keyframes: {
+        slideLeft: {
+          "0%": { marginLeft: "0%" },
+          "100%": { marginLeft: "100%" },
+        },
+        slideRight: {
+          "0%": { marginLeft: "0%" },
+          "100%": { marginLeft: "-100%" },
+        },
+      },
+      animation: {
+        slideRight: "slideRight 0.5s ease-in-out forwards ",
+        slideLeft: "slideLeft 0.5s ease-in-out forwards ",
+      },
     },
   },
   plugins: [],

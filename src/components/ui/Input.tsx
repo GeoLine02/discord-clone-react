@@ -5,9 +5,17 @@ interface IInputProps extends React.InputHTMLAttributes<HTMLInputElement> {
   error?: string;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   value: any;
+  hasBorder: boolean;
 }
 
-const Input = ({ value, setValue, label, error, ...rest }: IInputProps) => {
+const Input = ({
+  value,
+  setValue,
+  label,
+  error,
+  hasBorder,
+  ...rest
+}: IInputProps) => {
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (typeof value === "object") {
       setValue((prev: object) => ({
@@ -18,7 +26,6 @@ const Input = ({ value, setValue, label, error, ...rest }: IInputProps) => {
       setValue(e.target.value);
     }
   };
-
   return (
     <div>
       <div>
@@ -29,13 +36,13 @@ const Input = ({ value, setValue, label, error, ...rest }: IInputProps) => {
         )}
       </div>
       <input
-        className="bg-primary-gray p-2 rounded-md w-full outline-none focus:outline-primary-blue mt-1"
+        className={`bg-primary-gray p-2 rounded-md w-full outline-none
+          ${hasBorder && "focus:outline-primary-blue"}
+           `}
         type={rest.type}
         placeholder={rest.placeholder}
         onChange={onChange}
         name={rest.name}
-        value={value}
-        {...rest}
       />
       {error && <span className="text-red-600 text-sm">{error}</span>}
     </div>

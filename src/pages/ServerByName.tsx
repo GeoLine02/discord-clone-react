@@ -2,11 +2,13 @@ import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { getServerByName } from "../services/servers";
 import { IServer } from "../types/servers";
+import ServerSideBar from "../components/layout/ServerSideBar";
+import ServerHeader from "../components/layout/ServerHeader";
+import ServerChat from "../components/serverByName/ServerChat";
 
 const ServerByName = () => {
   const { serverName } = useParams();
   const [serverByName, setServerByName] = useState<IServer | null>(null);
-  console.log("serverByName: ", serverByName);
   useEffect(() => {
     const fetchServerByName = async () => {
       try {
@@ -20,7 +22,16 @@ const ServerByName = () => {
     fetchServerByName();
   }, [serverName]);
 
-  return <div>ServerByName</div>;
+  return (
+    <div className="flex min-h-screen bg-secondary-gray">
+      <ServerSideBar serverName={serverByName?.serverName as string} />
+      <div className="w-full min-h-full">
+        <ServerHeader />
+        {/* main */}
+        <ServerChat />
+      </div>
+    </div>
+  );
 };
 
 export default ServerByName;

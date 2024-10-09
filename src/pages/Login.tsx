@@ -64,6 +64,7 @@ const Login = () => {
           </div>
           <LoginForm
             loading={loading}
+            userCredentials={userCredentials}
             userCredentialsError={userCredentialsError}
             SetUserCredentials={SetUserCredentials}
             handleLogin={handleLogin}

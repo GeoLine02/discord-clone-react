@@ -1,23 +1,15 @@
-import { FaDiscord } from "react-icons/fa";
-import ServerList from "../servers/serverList";
 import Search from "../shared/Search";
 import { useState } from "react";
-import sideBarNavigation from "../../constants/sideBarNavigation";
 import { NavLink } from "react-router-dom";
 import FriendList from "../friends/FriendList";
+import sideBarNavigation from "../../constants/sideBarNavigation";
 
 const FriendsSideBar = () => {
   const [searchValue, setSearchValue] = useState<string>("");
   console.log(searchValue);
   return (
-    <div className="flex bg-primary-gray min-w-80">
-      <section className="flex flex-col max-w-fit items-center gap-2 py-2 px-1 overflow-y-auto">
-        <div className="bg-primary-blue text-white w-14 aspect-square rounded-xl cursor-pointer flex items-center justify-center">
-          <FaDiscord size={35} />
-        </div>
-        <ServerList />
-      </section>
-      <section className="bg-secondary-gray w-full">
+    <div className="flex bg-primary-gray min-w-64 max-w-80">
+      <section className="bg-accent-gray w-full">
         <div className="border-b border-gray-600 py-1 px-2">
           <Search
             placeholder="Find or start a conversation"

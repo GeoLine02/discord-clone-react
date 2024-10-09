@@ -9,6 +9,7 @@ import Channels from "./pages/Channels";
 import ProtectedRoute from "./guard/PrivateRoute";
 import SideBar from "./components/layout/SideBar";
 import Header from "./components/layout/Header";
+import ServerByName from "./pages/ServerByName";
 function App() {
   axios.defaults.withCredentials = true;
 
@@ -20,6 +21,10 @@ function App() {
         <Routes>
           <Route element={<ProtectedRoute />}>
             <Route index element={<Channels />} path={routes.CHANNEL} />
+            <Route
+              element={<ServerByName />}
+              path={`${routes.CHANNEL}/:serverName`}
+            />
           </Route>
           <Route element={<Home />} path={routes.HOME} />
           <Route element={<Register />} path={routes.REGISTER} />

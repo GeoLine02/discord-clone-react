@@ -7,6 +7,7 @@ export default {
         "primary-blue": "#404EED",
         "primary-gray": "#23272A",
         "secondary-gray": "#313338",
+        "accent-gray": "#2B2D31",
         "hover-gray": "#393C41",
       },
       keyframes: {

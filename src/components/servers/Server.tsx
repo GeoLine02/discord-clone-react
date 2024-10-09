@@ -14,7 +14,7 @@ const Server = ({ serverImage, serverName }: IServerProps) => {
 
   return (
     <div
-      onClick={() => navigate(`${routes.CHANNEL}${serverName}`)}
+      onClick={() => navigate(`${routes.CHANNEL}/${serverName}`)}
       className="relative group" // Using group for easier hover states
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}

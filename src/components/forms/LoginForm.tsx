@@ -10,20 +10,24 @@ interface ILoginFormProps {
   handleLogin: (e: React.FormEvent<HTMLFormElement>) => Promise<void>;
   loading: boolean;
   userCredentialsError: IUserLoginCrdentials;
+  userCredentials: IUserLoginCrdentials;
 }
 
 const LoginForm = ({
+  userCredentials,
   SetUserCredentials,
   handleLogin,
   loading,
   userCredentialsError,
 }: ILoginFormProps) => {
   const navigate = useNavigate();
-
+  console.log(userCredentials);
   return (
     <div>
       <form className="flex flex-col gap-5" onSubmit={handleLogin}>
         <Input
+          hasBorder={true}
+          value={userCredentials}
           label="email"
           type="email"
           name="email"
@@ -33,6 +37,8 @@ const LoginForm = ({
         />
         <div>
           <Input
+            hasBorder={true}
+            value={userCredentials}
             label="password"
             type="password"
             name="password"

@@ -18,9 +18,9 @@ export const getServersByOnwer = async (ownerId: number) => {
   }
 };
 
-export const getServerByName = async (serverName: string) => {
+export const getServerById = async (serverId: number) => {
   try {
-    const res = await api.get(`/server/by-name?serverName=${serverName}`, {
+    const res = await api.get(`/server/by-name?serverId=${serverId}`, {
       headers: {
         "Content-Type": "application/json",
       },
@@ -50,6 +50,59 @@ export const createServer = async (
     );
 
     return res.data.message;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const joinServerByUrl = async (userId: number, serverUrl: string) => {
+  try {
+    const res = await api.post(
+      "/server/join-by-url",
+      { userId, serverUrl },
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+    return res;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const joinServerByRequest = async (
+  senderId: number,
+  receiverId: number,
+  serverId: number
+) => {
+  try {
+    const res = await api.post(
+      "/server/join-by-request",
+      { senderId, receiverId, serverId },
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+    if (res && res.data) {
+      return res.data;
+    }
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const getServerRequests = async (userId: number) => {
+  try {
+    const res = await api.get(`/server/requests?userId=${userId}`, {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    return res;
   } catch (error) {
     console.log(error);
   }

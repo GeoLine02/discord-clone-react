@@ -1,10 +1,6 @@
-import { useLocation } from "react-router-dom";
 import ServerList from "../servers/serverList";
 
 const SideBar = () => {
-  const location = useLocation();
-
-  console.log("location: ", location.pathname);
   return (
     <div className="flex bg-primary-gray">
       <section className="flex flex-col items-center gap-2 py-2 min-h-screen px-2 overflow-y-auto overflow-x-hidden">

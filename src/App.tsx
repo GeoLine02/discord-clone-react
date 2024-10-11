@@ -23,7 +23,7 @@ function App() {
             <Route index element={<Channels />} path={routes.CHANNEL} />
             <Route
               element={<ServerByName />}
-              path={`${routes.CHANNEL}/:serverName`}
+              path={`${routes.CHANNEL}/:serverId`}
             />
           </Route>
           <Route element={<Home />} path={routes.HOME} />

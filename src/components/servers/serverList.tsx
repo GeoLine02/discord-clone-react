@@ -11,6 +11,7 @@ const ServerList = () => {
       {servers.map((server: IServer) => (
         <Server
           key={server.id}
+          id={server.id}
           serverImage={server.serverImage}
           serverName={server.serverName}
         />

@@ -1,5 +1,4 @@
 import { MoonLoader } from "react-spinners";
-import { useAuth } from "../../context/AuthProvider";
 import Input from "../ui/Input";
 import Upload from "../ui/Upload";
 
@@ -25,7 +24,6 @@ const CustomizeServer = ({
   serverName,
   serverImage,
 }: ICustomiseServer) => {
-  const { user } = useAuth();
   return (
     <div
       className="min-w-full max-w-full transition-all duration-700 ease-in-out flex flex-col justify-between"
@@ -43,6 +41,7 @@ const CustomizeServer = ({
         </p>
         <Upload file={serverImage} setFile={setServerImage} />
         <Input
+          hasBorder={false}
           value={serverName}
           setValue={setServerName}
           placeholder="Server name"

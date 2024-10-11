@@ -19,6 +19,7 @@ const ServerProvider = ({ children }: { children: React.ReactNode }) => {
   const [toggleServerCreationModal, setToggleServerCreationModal] =
     useState<boolean>(false);
   const [servers, setServers] = useState<[] | IServer[]>([]);
+  const [inviteRequests, setInviteRequests] = useState([]);
   const { user } = useAuth();
 
   useEffect(() => {
@@ -41,6 +42,7 @@ const ServerProvider = ({ children }: { children: React.ReactNode }) => {
         toggleServerCreationModal,
         setToggleServerCreationModal,
         servers,
+        inviteRequests,
       }}
     >
       {children}

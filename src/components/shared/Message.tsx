@@ -12,7 +12,7 @@ const Message = ({ message, user }: IMessageProps) => {
         <div className="w-12 aspect-square rounded-full flex items-center justify-center bg-primary-blue">
           <FaDiscord size={25} className="text-white" />
         </div>
-        <h1 className="text-white font-medium">{user.username}</h1>
+        <h1 className="text-white font-medium">{user?.username}</h1>
         <p>{message}</p>
       </section>
     </div>

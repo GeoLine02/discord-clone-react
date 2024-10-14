@@ -39,6 +39,7 @@ const FriendRequestsProvider = ({
       try {
         if (user) {
           const res = await getFriendList(user.id);
+          // console.log(res);
           setFriendList(res);
           return res;
         }

@@ -3,11 +3,10 @@ import FriendCard from "./FriendCard";
 
 const AllFriendsSection = () => {
   const { friendList } = useFriendRequests();
-
   return (
-    <div>
+    <div className="w-4/6">
       {friendList.map((friend: any) => (
-        <FriendCard key={friend.id} />
+        <FriendCard key={friend?.Friend?.id} friend={friend?.Friend} />
       ))}
     </div>
   );

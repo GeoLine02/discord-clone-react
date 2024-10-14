@@ -1,17 +1,14 @@
 import Message from "./Message";
-import { useAuth } from "../../context/AuthProvider";
-import { IUser } from "../../types/user";
+import { useChat } from "../../context/ChatProvider";
 
-interface IMessageProps {
-  message: string;
-}
-
-const MessageList = ({ message }: IMessageProps) => {
-  const { user } = useAuth();
+const MessageList = () => {
+  const { messageList } = useChat();
 
   return (
-    <div>
-      <Message message={message} user={user as IUser} />
+    <div className="min-h-[85%] flex flex-col gap-4">
+      {messageList?.map((message: any, index: number) => (
+        <Message key={index} message={message} />
+      ))}
     </div>
   );
 };

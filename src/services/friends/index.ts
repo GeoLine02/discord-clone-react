@@ -22,6 +22,19 @@ export const getAllFriendRequests = async (userId: number) => {
   }
 };
 
+export const getDirectMessages = async (userId: number) => {
+  try {
+    const res = await api.get(`frind/dm-visible-friends?userId=${userId}`, {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    return res.data;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 export const sendFrindRequest = async (senderId: number, username: string) => {
   try {
     const res = await api.post(

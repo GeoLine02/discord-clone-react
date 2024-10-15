@@ -6,10 +6,9 @@ const ServerChat = () => {
   const [message, setMessage] = useState("");
 
   return (
-    <div className="px-4 py-4 w-full text-white">
-      <section className="min-h-[87vh] w-full">
-        <MessageList />
-      </section>
+    <div className="px-4 py-4 w-full max-h-screen text-white">
+      <MessageList />
+
       <ChatInput message={message} setMessage={setMessage} />
     </div>
   );

@@ -2,7 +2,7 @@ import { useParams } from "react-router-dom";
 import FriendByIdHeader from "../components/friendById/FriendByIdHeader";
 import { useFriendRequests } from "../context/FriendsProvider";
 import MessageList from "../components/shared/MessageList";
-import { FormEvent, useEffect, useState } from "react";
+import { FormEvent, useEffect, useRef, useState } from "react";
 import ChatInput from "../components/shared/ChatInput";
 import FriendsSideBar from "../components/layout/FriendsSideBar";
 import { socket, useAuth } from "../context/AuthProvider";
@@ -30,9 +30,11 @@ const FriendById = () => {
     }
   }, [friend?.id, user?.id]);
 
+  const inputRef = useRef<HTMLInputElement>(null);
+  const scrollRef = useRef<HTMLDivElement>(null);
+
   const handleSubmitForm = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setMessage("");
     const sentDate = Date.now();
 
     const messageObj = {
@@ -42,9 +44,13 @@ const FriendById = () => {
       receiver: friend?.Friend,
     };
 
-    setMessageList([...messageList, messageObj]);
+    if (message) {
+      inputRef.current?.blur();
+      setMessage("");
+      setMessageList([...messageList, messageObj]);
 
-    socket.emit("send-message-to-friend", messageObj);
+      socket.emit("send-message-to-friend", messageObj);
+    }
   };
   return (
     <div className="min-h-screen max-h-screen flex bg-secondary-gray">
@@ -53,12 +59,10 @@ const FriendById = () => {
         <FriendByIdHeader friend={friend} />
         <form
           onSubmit={handleSubmitForm}
-          className="p-3 flex flex-col text-white justify-between"
+          className="p-3 flex flex-col text-white justify-between h-[94%]"
         >
-          <div className="min-h-[87vh]">
-            <MessageList />
-          </div>
-          <ChatInput message={message} setMessage={setMessage} />
+          <MessageList />
+          <ChatInput ref={inputRef} message={message} setMessage={setMessage} />
         </form>
       </div>
     </div>

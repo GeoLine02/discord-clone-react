@@ -5,16 +5,14 @@ import { MdEmojiEmotions } from "react-icons/md";
 interface IChatInputProps {
   message: string;
   setMessage: React.Dispatch<React.SetStateAction<string>>;
-  ref: React.ForwardedRef<HTMLInputElement>;
 }
 
-const ChatInput = ({ setMessage, message, ref }: IChatInputProps) => {
+const ChatInput = ({ setMessage, message }: IChatInputProps) => {
   return (
     <div className="flex items-center gap-2 bg-primary-gray px-3 rounded-lg min-w-full">
       <FaCirclePlus className="cursor-pointer" size={23} />
       <div className="min-w-[96%]">
         <Input
-          ref={ref}
           hasBorder={false}
           setValue={setMessage}
           value={message}

@@ -5,7 +5,7 @@ const MessageList = () => {
   const { messageList } = useChat();
 
   return (
-    <div className="flex flex-col gap-4 min-h-[87vh] max-h-[85vh] overflow-y-auto">
+    <div className="min-h-[85%] flex flex-col gap-4">
       {messageList?.map((message: any, index: number) => (
         <Message key={index} message={message} />
       ))}

@@ -2,7 +2,7 @@ import { useParams } from "react-router-dom";
 import FriendByIdHeader from "../components/friendById/FriendByIdHeader";
 import { useFriendRequests } from "../context/FriendsProvider";
 import MessageList from "../components/shared/MessageList";
-import { FormEvent, useEffect, useRef, useState } from "react";
+import { FormEvent, useEffect, useState } from "react";
 import ChatInput from "../components/shared/ChatInput";
 import FriendsSideBar from "../components/layout/FriendsSideBar";
 import { socket, useAuth } from "../context/AuthProvider";
@@ -19,7 +19,7 @@ const FriendById = () => {
   const { user } = useAuth();
   const [message, setMessage] = useState<string>("");
   const { messageList, setMessageList } = useChat();
-  const inputRef = useRef<HTMLInputElement>(null);
+  console.log(messageList);
   useEffect(() => {
     const fetchDirectMessages = async () => {
       const res = await getDirectMessages(user?.id, Number(id));
@@ -28,11 +28,11 @@ const FriendById = () => {
     if (user) {
       fetchDirectMessages();
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [id, user?.id]);
+  }, [friend?.id, user?.id]);
 
   const handleSubmitForm = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    setMessage("");
     const sentDate = Date.now();
 
     const messageObj = {
@@ -41,13 +41,10 @@ const FriendById = () => {
       content: message,
       receiver: friend?.Friend,
     };
-    if (message) {
-      setMessageList([...messageList, messageObj]);
 
-      socket.emit("send-message-to-friend", messageObj);
-      setMessage("");
-      inputRef.current?.blur();
-    }
+    setMessageList([...messageList, messageObj]);
+
+    socket.emit("send-message-to-friend", messageObj);
   };
   return (
     <div className="min-h-screen max-h-screen flex bg-secondary-gray">
@@ -58,8 +55,10 @@ const FriendById = () => {
           onSubmit={handleSubmitForm}
           className="p-3 flex flex-col text-white justify-between"
         >
-          <MessageList />
-          <ChatInput ref={inputRef} message={message} setMessage={setMessage} />
+          <div className="min-h-[87vh]">
+            <MessageList />
+          </div>
+          <ChatInput message={message} setMessage={setMessage} />
         </form>
       </div>
     </div>

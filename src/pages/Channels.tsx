@@ -8,7 +8,6 @@ import FriendsSideBar from "../components/layout/FriendsSideBar";
 
 const Channels = () => {
   const [showSection, setShowSection] = useState<string>("online");
-  console.log("section: ", showSection);
   return (
     <div className="flex max-h-screen w-full bg-secondary-gray">
       <FriendsSideBar />

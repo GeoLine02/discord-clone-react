@@ -13,6 +13,7 @@ interface IRegisterFormProps {
   ) => Promise<AxiosResponse<any> | undefined>;
   loading: boolean;
   userCredentialsError: IUserRegisterCredentials;
+  userCredentials: IUserRegisterCredentials;
 }
 
 const ReigsterForm = ({
@@ -20,18 +21,24 @@ const ReigsterForm = ({
   setUserCredentials,
   handleRegister,
   userCredentialsError,
+  userCredentials,
 }: IRegisterFormProps) => {
+  console.log(userCredentials);
   return (
     <form onSubmit={handleRegister} className="flex flex-col gap-5">
       <Input
+        value={userCredentials}
         error={userCredentialsError.email}
         required
         type="email"
         label="email"
         name="email"
         setValue={setUserCredentials}
+        hasBorder={true}
       />
       <Input
+        value={userCredentials}
+        hasBorder={true}
         error={userCredentialsError.username}
         required
         label="username"
@@ -39,6 +46,8 @@ const ReigsterForm = ({
         setValue={setUserCredentials}
       />
       <Input
+        value={userCredentials}
+        hasBorder={true}
         error={userCredentialsError.displayName}
         required
         label="display name"
@@ -46,6 +55,8 @@ const ReigsterForm = ({
         setValue={setUserCredentials}
       />
       <Input
+        value={userCredentials}
+        hasBorder={true}
         error={userCredentialsError.password}
         required
         label="password"

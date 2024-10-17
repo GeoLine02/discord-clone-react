@@ -13,7 +13,6 @@ import ServerByName from "./pages/ServerByName";
 import FriendById from "./pages/FriendById";
 function App() {
   axios.defaults.withCredentials = true;
-
   return (
     <div className="flex max-w-[100vw] max-h-[100vh]">
       <SideBar />

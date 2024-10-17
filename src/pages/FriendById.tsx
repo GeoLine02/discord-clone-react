@@ -19,6 +19,11 @@ const FriendById = () => {
   const { user } = useAuth();
   const [message, setMessage] = useState<string>("");
   const { messageList, setMessageList } = useChat();
+
+  //
+  useEffect(() => {
+    scrollRef.current?.scrollIntoView({ behavior: "smooth" });
+  }, [messageList?.length]);
   console.log(messageList);
   useEffect(() => {
     const fetchDirectMessages = async () => {
@@ -31,6 +36,7 @@ const FriendById = () => {
   }, [friend?.id, user?.id]);
 
   const inputRef = useRef<HTMLInputElement>(null);
+  const formRef = useRef<HTMLFormElement>(null);
   const scrollRef = useRef<HTMLDivElement>(null);
 
   const handleSubmitForm = (e: FormEvent<HTMLFormElement>) => {
@@ -45,7 +51,8 @@ const FriendById = () => {
     };
 
     if (message) {
-      inputRef.current?.blur();
+      formRef.current?.reset();
+      scrollRef.current?.scrollIntoView({ behavior: "smooth" });
       setMessage("");
       setMessageList([...messageList, messageObj]);
 
@@ -58,10 +65,11 @@ const FriendById = () => {
       <div className="w-full">
         <FriendByIdHeader friend={friend} />
         <form
+          ref={formRef}
           onSubmit={handleSubmitForm}
           className="p-3 flex flex-col text-white justify-between h-[94%]"
         >
-          <MessageList />
+          <MessageList ref={scrollRef} />
           <ChatInput ref={inputRef} message={message} setMessage={setMessage} />
         </form>
       </div>

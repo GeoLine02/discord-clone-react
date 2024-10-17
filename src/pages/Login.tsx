@@ -34,7 +34,6 @@ const Login = () => {
         validationSchema,
         userCredentials
       );
-
       if (isValid) {
         const resp = await authorizeUser(userCredentials);
         authContext.setToken(resp);

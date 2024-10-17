@@ -5,3 +5,7 @@ export interface IFriendRequest {
   senderId: number;
   status: string;
 }
+
+export interface IFriend {
+  Friend: IUser;
+}

@@ -37,12 +37,12 @@ const Register = () => {
   ): Promise<AxiosResponse<any> | undefined> => {
     e.preventDefault();
     setLoading(true);
+    console.log("cedentials: ", userCredentials);
     try {
       const { errors, isValid } = await validateForm(
         validationSchema,
         userCredentials
       );
-
       if (isValid) {
         const resp = await reigsterUser(userCredentials);
 
@@ -79,7 +79,7 @@ const Register = () => {
 
   return (
     <div className="w-screen h-screen bg-primary-blue flex items-center justify-center relative z-50">
-      <div className="bg-secondary-gray text-white rounded-md max-w-4xl p-6 z-50 relative">
+      <div className="bg-secondary-gray text-white rounded-md min-w-[360px] max-w-4xl p-6 z-50 relative">
         <div
           className="flex items-center mb-4 cursor-pointer"
           onClick={() => navigate(routes.HOME)}
@@ -88,6 +88,7 @@ const Register = () => {
           <span>Go back</span>
         </div>
         <ReigsterForm
+          userCredentials={userCredentials}
           loading={loading}
           handleRegister={handleRegister}
           setUserCredentials={setUserCredentials}

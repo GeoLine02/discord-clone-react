@@ -8,9 +8,8 @@ const ServerChat = () => {
   return (
     <div className="px-4 py-4 w-full text-white">
       <section className="min-h-[87vh] w-full">
-        <MessageList message={message} />
+        <MessageList />
       </section>
-
       <ChatInput message={message} setMessage={setMessage} />
     </div>
   );

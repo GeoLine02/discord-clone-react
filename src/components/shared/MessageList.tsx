@@ -1,19 +1,21 @@
+import { forwardRef } from "react";
 import Message from "./Message";
-import { useAuth } from "../../context/AuthProvider";
-import { IUser } from "../../types/user";
+import { useChat } from "../../context/ChatProvider";
 
-interface IMessageProps {
-  message: string;
-}
-
-const MessageList = ({ message }: IMessageProps) => {
-  const { user } = useAuth();
+const MessageList = forwardRef<HTMLDivElement>((props, ref) => {
+  const { messageList } = useChat();
 
   return (
-    <div>
-      <Message message={message} user={user as IUser} />
+    <div className="overflow-y-auto flex flex-col gap-3">
+      {messageList?.map((message: any, index: number) => (
+        <Message key={index} message={message} />
+      ))}
+      {/* invisible div to track the bottom */}
+      <div ref={ref}></div>
     </div>
   );
-};
+});
+
+MessageList.displayName = "MessageList"; // Optional, for better debugging
 
 export default MessageList;

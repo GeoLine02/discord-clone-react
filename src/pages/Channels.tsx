@@ -14,7 +14,7 @@ const Channels = () => {
       <section className="border-r-primary-gray min-h-screen bg-secondary-gray flex flex-col w-full">
         <FriendsHeader setShowSection={setShowSection} />
         <div className="flex h-full">
-          {showSection === "all" && <AllFriendsSection />}
+          {showSection === "All" && <AllFriendsSection />}
           {showSection === "Online" && <OnlineFriendsSection />}
           {showSection === "Pending" && <PendingFriendsSection />}
           {showSection === "addFriend" && <AddFriendSection />}

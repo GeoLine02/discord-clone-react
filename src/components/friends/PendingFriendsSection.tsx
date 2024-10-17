@@ -8,7 +8,7 @@ import { IFriendRequest } from "../../types/friends";
 import FriendRequestCard from "./FriendRequestCard";
 
 const PendingFriendsSection = () => {
-  const { friendRequests, setFriendList, setFriendRequests } =
+  const { friendRequests, setFriendList, friendList, setFriendRequests } =
     useFriendRequests();
   const { user } = useAuth();
 
@@ -17,15 +17,17 @@ const PendingFriendsSection = () => {
       const receiverId = user?.id;
       const res = await acceptFriendRequest(senderId, receiverId);
       const newFriend = friendRequests?.find(
-        (request) => request.Sender.id === senderId
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        (request: any) => request.Sender.id === senderId
       );
       const filteredFriendReuqests = friendRequests.filter(
-        (request) => request.Sender.id === newFriend.id
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        (request: any) => request.Sender.id === newFriend.id
       );
       if (res) {
         setFriendRequests(filteredFriendReuqests);
 
-        setFriendList((prev) => [...prev, { User: newFriend.Sender }]);
+        setFriendList([...friendList, { Friend: newFriend.Sender }]);
         socket.emit("accept-friend-request", user, senderId);
       }
 

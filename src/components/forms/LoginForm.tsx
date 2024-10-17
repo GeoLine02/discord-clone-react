@@ -21,7 +21,6 @@ const LoginForm = ({
   userCredentialsError,
 }: ILoginFormProps) => {
   const navigate = useNavigate();
-  console.log(userCredentials);
   return (
     <div>
       <form className="flex flex-col gap-5" onSubmit={handleLogin}>

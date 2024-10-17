@@ -1,14 +1,17 @@
 import { useFriendRequests } from "../../context/FriendsProvider";
+import { IFriend } from "../../types/friends";
 import FriendCard from "./FriendCard";
 
 const AllFriendsSection = () => {
   const { friendList } = useFriendRequests();
-
   return (
-    <div>
-      {friendList.map((friend: any) => (
-        <FriendCard key={friend.id} />
-      ))}
+    <div className="w-4/6">
+      {friendList.map(
+        (friend: IFriend) => (
+          console.log(friend),
+          (<FriendCard key={friend?.Friend?.id} friend={friend?.Friend} />)
+        )
+      )}
     </div>
   );
 };

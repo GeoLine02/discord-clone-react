@@ -14,7 +14,7 @@ const FriendById = () => {
   const { id } = useParams();
   const { friendList } = useFriendRequests();
   const friend = friendList.find(
-    (friend: IFriend) => friend.Friend.id === Number(id)
+    (friend: IFriend) => friend?.Friend?.id === Number(id)
   );
   const { user } = useAuth();
   const [message, setMessage] = useState<string>("");
@@ -24,7 +24,6 @@ const FriendById = () => {
   useEffect(() => {
     scrollRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messageList?.length]);
-  console.log(messageList);
   useEffect(() => {
     const fetchDirectMessages = async () => {
       const res = await getDirectMessages(user?.id, Number(id));

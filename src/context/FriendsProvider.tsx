@@ -23,13 +23,11 @@ const FriendRequestsProvider = ({
   const [friendRequests, setFriendRequests] = useState<any>([]);
   const [friendList, setFriendList] = useState<any>([]);
   const [onlineFrindsList, setOnlineFriendsList] = useState<any>([]);
-
   const { user } = useAuth();
-
   useEffect(() => {
     if (user) {
       socket.on("get-online-friends", (onlineFriends) => {
-        setOnlineFriendsList((prev) => [...prev, onlineFriends]);
+        setOnlineFriendsList([...onlineFrindsList, onlineFriends]);
       });
     }
   }, [user]);
@@ -39,7 +37,6 @@ const FriendRequestsProvider = ({
       try {
         if (user) {
           const res = await getFriendList(user.id);
-          // console.log(res);
           setFriendList(res);
           return res;
         }
@@ -83,7 +80,11 @@ const FriendRequestsProvider = ({
     if (user) {
       socket.on("friend-request-accepted", (user) => {
         if (user) {
-          setFriendList((prev) => [...prev, user]);
+          const newFriend = {
+            Friend: user,
+          };
+
+          setFriendList([...friendList, newFriend]);
         }
       });
     }

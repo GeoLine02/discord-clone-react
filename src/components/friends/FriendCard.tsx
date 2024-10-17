@@ -1,18 +1,17 @@
 import { TbMessageCircleFilled } from "react-icons/tb";
 import { CgMoreVerticalO } from "react-icons/cg";
-import { FaDiscord } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import routes from "../../constants/routes";
 import UserCard from "../shared/UserCard";
+import { IUser } from "../../types/user";
 interface IFriendCardProps {
-  friend: any;
+  friend: IUser;
 }
 
 const FriendCard = ({ friend }: IFriendCardProps) => {
   const navigate = useNavigate();
-
   const handleNavigate = () => {
-    navigate(`${routes.CHANNEL}/friend-id/${friend.id}`);
+    navigate(`${routes.CHANNEL}/friend-id/${friend?.id}`);
   };
 
   return (

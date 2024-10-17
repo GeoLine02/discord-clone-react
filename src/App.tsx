@@ -10,9 +10,9 @@ import ProtectedRoute from "./guard/PrivateRoute";
 import SideBar from "./components/layout/SideBar";
 import Header from "./components/layout/Header";
 import ServerByName from "./pages/ServerByName";
+import FriendById from "./pages/FriendById";
 function App() {
   axios.defaults.withCredentials = true;
-
   return (
     <div className="flex max-w-[100vw] max-h-[100vh]">
       <SideBar />
@@ -24,6 +24,10 @@ function App() {
             <Route
               element={<ServerByName />}
               path={`${routes.CHANNEL}/:serverName`}
+            />
+            <Route
+              element={<FriendById />}
+              path={`${routes.CHANNEL}/friend-id/:id`}
             />
           </Route>
           <Route element={<Home />} path={routes.HOME} />

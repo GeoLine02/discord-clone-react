@@ -8,13 +8,14 @@ import FriendsSideBar from "../components/layout/FriendsSideBar";
 
 const Channels = () => {
   const [showSection, setShowSection] = useState<string>("online");
+  console.log("section: ", showSection);
   return (
     <div className="flex max-h-screen w-full bg-secondary-gray">
       <FriendsSideBar />
       <section className="border-r-primary-gray min-h-screen bg-secondary-gray flex flex-col w-full">
         <FriendsHeader setShowSection={setShowSection} />
         <div className="flex h-full">
-          {showSection === "all" && <AllFriendsSection />}
+          {showSection === "All" && <AllFriendsSection />}
           {showSection === "Online" && <OnlineFriendsSection />}
           {showSection === "Pending" && <PendingFriendsSection />}
           {showSection === "addFriend" && <AddFriendSection />}

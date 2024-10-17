@@ -6,7 +6,6 @@ import sideBarNavigation from "../../constants/sideBarNavigation";
 
 const FriendsSideBar = () => {
   const [searchValue, setSearchValue] = useState<string>("");
-  console.log(searchValue);
   return (
     <div className="flex bg-primary-gray min-w-64 max-w-80">
       <section className="bg-accent-gray w-full">

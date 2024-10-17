@@ -1,12 +1,29 @@
-const FriendCard = () => {
+import { TbMessageCircleFilled } from "react-icons/tb";
+import { CgMoreVerticalO } from "react-icons/cg";
+import { FaDiscord } from "react-icons/fa";
+import { useNavigate } from "react-router-dom";
+import routes from "../../constants/routes";
+import UserCard from "../shared/UserCard";
+interface IFriendCardProps {
+  friend: any;
+}
+
+const FriendCard = ({ friend }: IFriendCardProps) => {
+  const navigate = useNavigate();
+
+  const handleNavigate = () => {
+    navigate(`${routes.CHANNEL}/friend-id/${friend.id}`);
+  };
+
   return (
-    <section className="flex items-center justify-between w-full">
-      <div className="flex items-center gap-3">
-        <div className="bg-green-500 w-11 aspect-square rounded-full"></div>
-        <h1>friend name</h1>
-      </div>
-      <div>
-        <h1>message</h1>
+    <section
+      onClick={handleNavigate}
+      className="flex items-center justify-between w-full text-white hover:bg-hover-gray cursor-pointer p-2"
+    >
+      <UserCard iconSize={25} user={friend} />
+      <div className="text-white flex gap-3 items-center">
+        <TbMessageCircleFilled className="cursor-pointer" size={30} />
+        <CgMoreVerticalO className="cursor-pointer" size={25} />
       </div>
     </section>
   );

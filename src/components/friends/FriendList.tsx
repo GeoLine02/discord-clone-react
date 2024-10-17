@@ -2,7 +2,7 @@ import Friend from "./Friend";
 
 const FriendList = () => {
   return (
-    <div>
+    <div className="">
       <Friend />
       <Friend />
       <Friend />

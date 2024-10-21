@@ -8,12 +8,12 @@ const ServerList = () => {
 
   return (
     <div className="space-y-2 px-1">
-      {servers.map((server: IServer) => (
+      {servers?.map((server: IServer) => (
         <Server
-          key={server.id}
-          id={server.id}
-          serverImage={server.serverImage}
-          serverName={server.serverName}
+          key={server?.id}
+          id={server?.id}
+          serverImage={server?.serverImage}
+          serverName={server?.serverName}
         />
       ))}
       <AddServerBtn />

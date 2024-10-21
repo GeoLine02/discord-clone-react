@@ -18,6 +18,19 @@ export const getServersByOnwer = async (ownerId: number) => {
   }
 };
 
+export const getServers = async (userId: number) => {
+  try {
+    const res = await api.get(`/server?userId=${userId}`, {
+      headers: { "Content-Type": "application/json" },
+    });
+    if (res && res.data) {
+      return res.data;
+    }
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 export const getServerById = async (serverId: number) => {
   try {
     const res = await api.get(`/server/by-name?serverId=${serverId}`, {

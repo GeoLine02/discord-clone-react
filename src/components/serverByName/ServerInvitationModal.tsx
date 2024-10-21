@@ -4,9 +4,11 @@ import { useState } from "react";
 import { IoSearchSharp } from "react-icons/io5";
 import { useFriendRequests } from "../../context/FriendsProvider";
 import ServerInvitationCard from "./ServerInvitationCard";
-import { joinServerByRequest } from "../../services/servers";
-import { useAuth } from "../../context/AuthProvider";
+// import { joinServerByRequest } from "../../services/servers";
+import { socket, useAuth } from "../../context/AuthProvider";
 import { useParams } from "react-router-dom";
+import { IFriend } from "../../types/friends";
+import { useServer } from "../../context/ServerProvider";
 
 interface IServerInvitationModalProps {
   handleCloseModal: () => void;
@@ -21,24 +23,38 @@ const ServerInvitationModal = ({
   const { friendList } = useFriendRequests();
   const { user } = useAuth();
   const { serverId } = useParams();
+  const { servers } = useServer();
   const invitationLink = `http://discord.gg/server/${serverName}`;
   const copyInvitationLink = () => {
     navigator.clipboard.writeText(invitationLink);
   };
 
-  const handleServerInvitation = async (friendId: number) => {
-    try {
-      const res = await joinServerByRequest(
-        user?.id,
-        friendId,
-        Number(serverId)
-      );
-      return res;
-    } catch (error) {
-      console.log(error);
-    }
+  // const handleServerInvitationByUrl = async (friendId: number) => {
+  //   try {
+  //     const res = await joinServerByRequest(
+  //       user?.id,
+  //       friendId,
+  //       Number(serverId)
+  //     );
+  //     return res;
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
+  const handleServerInvitation = (friendId: number) => {
+    // find receiver from friends list
+    const receiver = friendList.find(
+      (friend: IFriend) => friend.Friend.id === friendId
+    );
+    const server = servers.find((server) => server.id === Number(serverId));
+    socket.emit("send-server-invitation", {
+      server,
+      serverId: Number(serverId),
+      sender: user,
+      receiver,
+    });
   };
-  console.log("friendList: ", friendList);
+
   return (
     <div className="bg-secondary-gray text-white rounded-md p-4 min-w-[404px]">
       <header className="p-3">
@@ -62,18 +78,13 @@ const ServerInvitationModal = ({
       </header>
       <main className="p-3">
         <div className="min-h-64 max-h-64 overflow-y-auto p-2">
-          {friendList?.map(
-            (friend) => (
-              console.log(friend),
-              (
-                <ServerInvitationCard
-                  key={friend.Friend.id}
-                  friend={friend.Friend}
-                  handleServerInvitation={handleServerInvitation}
-                />
-              )
-            )
-          )}
+          {friendList?.map((friend: IFriend) => (
+            <ServerInvitationCard
+              key={friend.Friend.id}
+              friend={friend.Friend}
+              handleServerInvitation={handleServerInvitation}
+            />
+          ))}
         </div>
       </main>
       <footer className="p-3">

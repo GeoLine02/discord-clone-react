@@ -1,7 +1,14 @@
-import { createContext, useEffect, useContext, useState } from "react";
-import { useAuth } from "./AuthProvider";
-import { getServersByOnwer } from "../services/servers";
+import {
+  createContext,
+  useEffect,
+  useContext,
+  useState,
+  useLayoutEffect,
+} from "react";
+import { socket, useAuth } from "./AuthProvider";
+import { getServers, getServersByOnwer } from "../services/servers";
 import { IServer } from "../types/servers";
+import { useChat } from "./ChatProvider";
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const ServerContext = createContext<any>(undefined);
@@ -19,30 +26,63 @@ const ServerProvider = ({ children }: { children: React.ReactNode }) => {
   const [toggleServerCreationModal, setToggleServerCreationModal] =
     useState<boolean>(false);
   const [servers, setServers] = useState<[] | IServer[]>([]);
-  const [inviteRequests, setInviteRequests] = useState([]);
   const { user } = useAuth();
+  const { messageList, setMessageList } = useChat();
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     const fetchServerByOwnerId = async () => {
       try {
         const fetchedServers = await getServersByOnwer(user?.id);
-        setServers([...servers, ...fetchedServers]);
+        setServers((prev: IServer[]) => [...prev, ...fetchedServers]);
       } catch (error) {
         console.log(error);
       }
     };
-    if (user) {
+    if (user?.id) {
       fetchServerByOwnerId();
     }
   }, [user?.id]);
 
+  useLayoutEffect(() => {
+    const getAllServers = async () => {
+      try {
+        if (user?.id) {
+          const res = await getServers(user?.id);
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          const server = res?.map((server: any) => server.server);
+          if (server.length) {
+            setServers((prev) => [...prev, ...server]);
+          }
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    if (user?.id) {
+      getAllServers();
+    }
+  }, [user]);
+  useEffect(() => {
+    socket.on("server-invitation-received", (serverInvitation) => {
+      setMessageList([...messageList, serverInvitation]);
+    });
+  }, [user?.id, messageList, setMessageList]);
+
+  useEffect(() => {
+    if (user) {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      socket.on("server-invite-accepted", (inviteObj: any) => {
+        console.log("invite accepted: ", inviteObj);
+      });
+    }
+  }, [user?.id, user, servers]);
   return (
     <ServerContext.Provider
       value={{
         toggleServerCreationModal,
         setToggleServerCreationModal,
         servers,
-        inviteRequests,
+        setServers,
       }}
     >
       {children}

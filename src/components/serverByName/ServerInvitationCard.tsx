@@ -3,8 +3,7 @@ import { FaDiscord } from "react-icons/fa";
 
 interface IFriendInvitationCardProps {
   friend: IUser;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  handleServerInvitation: (friendId: number) => Promise<any>;
+  handleServerInvitation: (friendId: number) => void;
 }
 
 const ServerInvitationCard = ({

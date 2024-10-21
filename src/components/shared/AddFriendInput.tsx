@@ -6,13 +6,13 @@ const AddFriendInput = () => {
   const [username, setUsername] = useState<string>("");
   const [sendingStatus, setSendingStatus] = useState<string | null>(null);
   const { user } = useAuth();
-  const senderId = user.id;
+  const senderId = user?.id;
 
   const handleSendFriendRequest = async () => {
     try {
       const res = await sendFrindRequest(senderId, username);
       socket.emit("send-friend-request", {
-        senderUsername: user.username,
+        senderUsername: user?.username,
         receiverUsername: username,
         senderId,
         status: "pending",

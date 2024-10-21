@@ -5,16 +5,17 @@ import routes from "../../constants/routes";
 interface IServerProps {
   serverName: string;
   serverImage: string;
+  id: number;
 }
 
-const Server = ({ serverImage, serverName }: IServerProps) => {
+const Server = ({ serverImage, serverName, id }: IServerProps) => {
   const [isHovered, setIsHovered] = useState<boolean>(false);
   const navigate = useNavigate();
   const defaultServerImage = `${serverName.split("")[0]?.toUpperCase()}s`;
 
   return (
     <div
-      onClick={() => navigate(`${routes.CHANNEL}/${serverName}`)}
+      onClick={() => navigate(`${routes.CHANNEL}/${id}`)}
       className="relative group" // Using group for easier hover states
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}

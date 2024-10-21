@@ -9,6 +9,8 @@ import { socket, useAuth } from "../context/AuthProvider";
 import { IFriend } from "../types/friends";
 import { useChat } from "../context/ChatProvider";
 import { getDirectMessages } from "../services/messages";
+import { IServer } from "../types/servers";
+import { useServer } from "../context/ServerProvider";
 
 const FriendById = () => {
   const { id } = useParams();
@@ -18,9 +20,9 @@ const FriendById = () => {
   );
   const { user } = useAuth();
   const [message, setMessage] = useState<string>("");
-  const { messageList, setMessageList } = useChat();
+  const { setServers } = useServer();
+  const { messageList, setMessageList, contentType } = useChat();
 
-  //
   useEffect(() => {
     scrollRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messageList?.length]);
@@ -43,10 +45,12 @@ const FriendById = () => {
     const sentDate = Date.now();
 
     const messageObj = {
+      id: messageList.length,
       sender: user,
-      sentDate,
-      content: message,
       receiver: friend?.Friend,
+      content: message,
+      contentType: contentType,
+      sentDate,
     };
 
     if (message) {
@@ -58,6 +62,27 @@ const FriendById = () => {
       socket.emit("send-message-to-friend", messageObj);
     }
   };
+
+  const handleAcceptServerInvitation = (
+    serverName: string,
+    id: number,
+    server: IServer
+  ) => {
+    const filteredMessageList = messageList.filter(
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      (message: any) => message.id !== id
+    );
+    setMessageList(filteredMessageList);
+    socket.emit("accept-server-invite", {
+      serverName,
+      id,
+      status: "member",
+      user: user,
+      friend: friend?.Friend,
+    });
+    setServers((prev: IServer[]) => [...prev, server]);
+  };
+
   return (
     <div className="min-h-screen max-h-screen flex bg-secondary-gray">
       <FriendsSideBar />
@@ -68,7 +93,11 @@ const FriendById = () => {
           onSubmit={handleSubmitForm}
           className="p-3 flex flex-col text-white justify-between h-[94%]"
         >
-          <MessageList ref={scrollRef} />
+          <MessageList
+            friendId={Number(id)}
+            handleAcceptServerInvitation={handleAcceptServerInvitation}
+            ref={scrollRef}
+          />
           <ChatInput ref={inputRef} message={message} setMessage={setMessage} />
         </form>
       </div>

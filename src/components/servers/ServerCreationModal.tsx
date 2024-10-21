@@ -5,7 +5,7 @@ import ChooseCommunity from "./ChooseCommunity";
 import JoinServer from "./JoinServer";
 import useSlide from "../../hooks/useSlide";
 import CustomizeServer from "./CustomizeServer";
-import { createServer } from "../../services/servers";
+import { createServer, joinServerByUrl } from "../../services/servers";
 import { useAuth } from "../../context/AuthProvider";
 import { uploadImageToFirebase } from "../../services/firebase";
 
@@ -26,6 +26,7 @@ const ServerCreationModal = ({
   );
   const [steps, setSteps] = useState<string[]>(["template"]);
   const [translate, handleSlideLeft, handleSlideRight] = useSlide();
+  const [serverUrl, setServerUrl] = useState<string>("");
   const isJoiningServer = steps.includes("serverCommunity");
   const handleStepBack = () => {
     handleSlideRight();
@@ -36,6 +37,15 @@ const ServerCreationModal = ({
   const handleSetSteps = (nextStep: string) => {
     handleSlideLeft();
     setSteps((prev) => [...prev, nextStep]);
+  };
+
+  const handleJoinServer = async () => {
+    try {
+      const res = await joinServerByUrl(user?.id, serverUrl);
+      return res;
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const handleCreateServer = async () => {
@@ -78,7 +88,13 @@ const ServerCreationModal = ({
           setServerTemplate={setServerTemplate}
         />
         {!isJoiningServer && (
-          <JoinServer translate={translate} handleStepBack={handleStepBack} />
+          <JoinServer
+            handleJoinServer={handleJoinServer}
+            serverUrl={serverUrl}
+            setServerUrl={setServerUrl}
+            translate={translate}
+            handleStepBack={handleStepBack}
+          />
         )}
         <ChooseCommunity
           translate={translate}

@@ -5,7 +5,6 @@ const Channels = () => {
   return (
     <div className="px-2 space-y-2">
       <TextChannelsList />
-
       <VoiceChannelsList />
     </div>
   );

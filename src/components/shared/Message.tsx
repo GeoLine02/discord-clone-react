@@ -4,7 +4,7 @@ import { IServer } from "../../types/servers";
 import { IMessage } from "../../types/messages";
 interface IMessageProps {
   message: IMessage;
-  handleAcceptServerInvitation: (
+  handleAcceptServerInvitation?: (
     serverName: string,
     id: number,
     server: IServer

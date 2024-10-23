@@ -1,6 +1,6 @@
 import { createContext, useEffect, useContext, useState } from "react";
 import { socket } from "./AuthProvider";
-import { IMessage } from "../types/messages";
+import { IMessage, IServerMessage } from "../types/messages";
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const ChatContext = createContext<any>(null);
@@ -17,7 +17,9 @@ export const useChat = () => {
 const ChatProvider = ({ children }: { children: React.ReactNode }) => {
   const [messageList, setMessageList] = useState<[] | IMessage[]>([]);
   const [contentType, setContentType] = useState<string>("text");
-
+  const [serverMessages, setServerMessages] = useState<[] | IServerMessage[]>(
+    []
+  );
   useEffect(() => {
     socket.on("message-received-from-friend", (messageObj) => {
       setMessageList([...messageList, messageObj]);
@@ -26,7 +28,14 @@ const ChatProvider = ({ children }: { children: React.ReactNode }) => {
 
   return (
     <ChatContext.Provider
-      value={{ messageList, setMessageList, contentType, setContentType }}
+      value={{
+        messageList,
+        setMessageList,
+        contentType,
+        setContentType,
+        serverMessages,
+        setServerMessages,
+      }}
     >
       {children}
     </ChatContext.Provider>

@@ -43,9 +43,9 @@ const FriendById = () => {
   const handleSubmitForm = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const sentDate = Date.now();
-
+    const liveMessageId = messageList?.reverse()[0]?.id + 1 || 1;
     const messageObj = {
-      id: messageList.length,
+      id: liveMessageId,
       sender: user,
       receiver: friend?.Friend,
       content: message,
@@ -94,6 +94,7 @@ const FriendById = () => {
           className="p-3 flex flex-col text-white justify-between h-[94%]"
         >
           <MessageList
+            messageList={messageList}
             friendId={Number(id)}
             handleAcceptServerInvitation={handleAcceptServerInvitation}
             ref={scrollRef}

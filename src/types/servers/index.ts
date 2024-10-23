@@ -1,3 +1,5 @@
+import { IChannel } from "../channels";
+
 export interface IServer {
   id: number;
   serverName: string;
@@ -5,4 +7,5 @@ export interface IServer {
   serverCommunity: string;
   ownerId: number;
   serverImage: string;
+  channels: IChannel[];
 }

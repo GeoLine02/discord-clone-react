@@ -76,6 +76,7 @@ const ServerProvider = ({ children }: { children: React.ReactNode }) => {
       });
     }
   }, [user?.id, user, servers]);
+
   return (
     <ServerContext.Provider
       value={{

@@ -11,7 +11,7 @@ const TextChannel = ({ channelName, serverId }: ITextChannelProps) => {
   const navigate = useNavigate();
 
   const handleNavigate = () => {
-    navigate(`${routes.CHANNEL}/${serverId}/#${channelName}`);
+    navigate(`${routes.CHANNEL}/${serverId}/${channelName}`);
   };
 
   return (

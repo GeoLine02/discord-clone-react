@@ -12,3 +12,12 @@ export interface IMessage {
   senderId: number;
   server?: IServer;
 }
+
+export interface IServerMessage {
+  id: number;
+  content: string;
+  senderId: number;
+  serverId: number;
+  sender: IUser;
+  contentType: string;
+}

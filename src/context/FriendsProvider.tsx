@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useState, useEffect, useContext, createContext } from "react";
-import { useAuth, socket } from "./AuthProvider";
+import { useAuth, getSocket } from "./AuthProvider";
 import { getAllFriendRequests, getFriendList } from "../services/friends";
 import { IFriendRequest } from "../types/friends";
 
@@ -24,6 +24,7 @@ const FriendRequestsProvider = ({
   const [friendList, setFriendList] = useState<any>([]);
   const [onlineFrindsList, setOnlineFriendsList] = useState<any>([]);
   const { user } = useAuth();
+  const socket = getSocket();
   useEffect(() => {
     if (user) {
       socket.on("get-online-friends", (onlineFriends) => {

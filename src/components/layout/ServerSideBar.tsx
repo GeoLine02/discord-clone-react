@@ -7,12 +7,14 @@ import { IoClose } from "react-icons/io5";
 import Modal from "../ui/Modal";
 import ServerInvitationModal from "../serverByName/ServerInvitationModal";
 import Channels from "../channels/Channels";
+import { IServer } from "../../types/servers";
 
 interface IServerSideBarProps {
   serverName: string;
+  serverByName: IServer;
 }
 
-const ServerSideBar = ({ serverName }: IServerSideBarProps) => {
+const ServerSideBar = ({ serverName, serverByName }: IServerSideBarProps) => {
   const { user } = useAuth();
 
   const [displayServerMenu, setDisplayServerMenu] = useState<boolean>(false);
@@ -48,7 +50,7 @@ const ServerSideBar = ({ serverName }: IServerSideBarProps) => {
         <section className="cursor-pointer hover:bg-hover-gray p-2 mt-2 border-b border-gray-500">
           Events
         </section>
-        <Channels />
+        <Channels serverByName={serverByName} />
       </div>
       <footer className="bg-primary-gray py-2 px-2 flex justify-between">
         {/* profile */}

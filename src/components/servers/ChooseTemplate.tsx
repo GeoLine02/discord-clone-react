@@ -2,7 +2,7 @@ import ServerTemplatesList from "./ServerTemplatesList";
 
 interface IChooseTemplateProps {
   translate: number;
-  setServerTemplate: React.Dispatch<React.SetStateAction<string>>;
+  setServerTemplate: React.Dispatch<React.SetStateAction<any>>;
   handleSetSteps: (nextStep: string) => void;
   steps: string[];
 }
@@ -11,7 +11,6 @@ const ChooseTemplate = ({
   setServerTemplate,
   handleSetSteps,
   translate,
-  steps,
 }: IChooseTemplateProps) => {
   return (
     <div

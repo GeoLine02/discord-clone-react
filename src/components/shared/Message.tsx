@@ -4,7 +4,7 @@ import { IServer } from "../../types/servers";
 import { IMessage } from "../../types/messages";
 interface IMessageProps {
   message: IMessage;
-  handleAcceptServerInvitation: (
+  handleAcceptServerInvitation?: (
     serverName: string,
     id: number,
     server: IServer
@@ -13,7 +13,6 @@ interface IMessageProps {
 
 const Message = ({ message, handleAcceptServerInvitation }: IMessageProps) => {
   const { content, sender, contentType, id, server } = message;
-  console.log("@@@@@@@@@@@", message);
   return (
     <div>
       {contentType === "text" && (

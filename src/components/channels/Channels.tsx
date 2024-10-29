@@ -1,12 +1,16 @@
+import { IServer } from "../../types/servers";
 import TextChannelsList from "../serverByName/TextChannelsList";
 import VoiceChannelsList from "../serverByName/VoiceChannelsList";
 
-const Channels = () => {
+interface IChannelsProps {
+  serverByName: IServer;
+}
+
+const Channels = ({ serverByName }: IChannelsProps) => {
   return (
     <div className="px-2 space-y-2">
-      <TextChannelsList />
-
-      <VoiceChannelsList />
+      <TextChannelsList serverByName={serverByName} />
+      <VoiceChannelsList serverByName={serverByName} />
     </div>
   );
 };

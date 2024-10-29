@@ -6,8 +6,10 @@ import JoinServer from "./JoinServer";
 import useSlide from "../../hooks/useSlide";
 import CustomizeServer from "./CustomizeServer";
 import { createServer, joinServerByUrl } from "../../services/servers";
-import { useAuth } from "../../context/AuthProvider";
+import { getSocket, useAuth } from "../../context/AuthProvider";
 import { uploadImageToFirebase } from "../../services/firebase";
+import { useServer } from "../../context/ServerProvider";
+import { IServer } from "../../types/servers";
 
 interface IServerCreationModalprops {
   setToggleServerCreationModal: React.Dispatch<React.SetStateAction<boolean>>;
@@ -17,7 +19,8 @@ const ServerCreationModal = ({
   setToggleServerCreationModal,
 }: IServerCreationModalprops) => {
   const { user } = useAuth();
-  const [serverTemplate, setServerTemplate] = useState<string>("");
+  const [serverTemplate, setServerTemplate] = useState<any>(null);
+  console.log("serverTemplate", serverTemplate);
   const [serverMembersType, setServerMembersType] = useState<string>("");
   const [serverImage, setServerImage] = useState<File | null>(null);
   const [isloading, setIsLoading] = useState<boolean>(false);
@@ -27,7 +30,9 @@ const ServerCreationModal = ({
   const [steps, setSteps] = useState<string[]>(["template"]);
   const [translate, handleSlideLeft, handleSlideRight] = useSlide();
   const [serverUrl, setServerUrl] = useState<string>("");
+  const { setServers } = useServer();
   const isJoiningServer = steps.includes("serverCommunity");
+  const socket = getSocket();
   const handleStepBack = () => {
     handleSlideRight();
     const lastStep = steps.pop();
@@ -65,6 +70,13 @@ const ServerCreationModal = ({
         ImageUrl
       );
 
+      if (res) {
+        setServers((prev: IServer[]) => [...prev, res?.server]);
+        socket.emit("connect-server", {
+          serverName: res?.server?.serverName,
+        });
+        setToggleServerCreationModal(false);
+      }
       return res;
     } catch (error) {
       throw new Error(`Server creation error: ${error}`);

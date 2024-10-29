@@ -5,7 +5,7 @@ import MessageList from "../components/shared/MessageList";
 import { FormEvent, useEffect, useRef, useState } from "react";
 import ChatInput from "../components/shared/ChatInput";
 import FriendsSideBar from "../components/layout/FriendsSideBar";
-import { socket, useAuth } from "../context/AuthProvider";
+import { getSocket, useAuth } from "../context/AuthProvider";
 import { IFriend } from "../types/friends";
 import { useChat } from "../context/ChatProvider";
 import { getDirectMessages } from "../services/messages";
@@ -22,7 +22,7 @@ const FriendById = () => {
   const [message, setMessage] = useState<string>("");
   const { setServers } = useServer();
   const { messageList, setMessageList, contentType } = useChat();
-
+  const socket = getSocket();
   useEffect(() => {
     scrollRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messageList?.length]);
@@ -43,9 +43,9 @@ const FriendById = () => {
   const handleSubmitForm = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const sentDate = Date.now();
-
+    const liveMessageId = messageList?.reverse()[0]?.id + 1 || 1;
     const messageObj = {
-      id: messageList.length,
+      id: liveMessageId,
       sender: user,
       receiver: friend?.Friend,
       content: message,
@@ -80,6 +80,7 @@ const FriendById = () => {
       user: user,
       friend: friend?.Friend,
     });
+    socket.emit("join-channels", { server: [server], user });
     setServers((prev: IServer[]) => [...prev, server]);
   };
 
@@ -94,6 +95,7 @@ const FriendById = () => {
           className="p-3 flex flex-col text-white justify-between h-[94%]"
         >
           <MessageList
+            messageList={messageList}
             friendId={Number(id)}
             handleAcceptServerInvitation={handleAcceptServerInvitation}
             ref={scrollRef}

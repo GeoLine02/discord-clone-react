@@ -1,15 +1,14 @@
 import { FaChevronRight } from "react-icons/fa6";
 
 interface IServerTemplateCardProps {
-  templateName: string;
-  // TemplateIcon: any;
-  setServerTemplate: React.Dispatch<React.SetStateAction<string>>;
+  template: any;
+  setServerTemplate: React.Dispatch<React.SetStateAction<any>>;
   handleSetSteps: (nextStep: string) => void;
   stepName: string;
 }
 
 const ServerTemplateCard = ({
-  templateName,
+  template,
   setServerTemplate,
   handleSetSteps,
   stepName,
@@ -17,7 +16,7 @@ const ServerTemplateCard = ({
 IServerTemplateCardProps) => {
   const handleChooseOption = () => {
     handleSetSteps(stepName);
-    setServerTemplate(templateName);
+    setServerTemplate(template);
   };
 
   return (
@@ -27,7 +26,7 @@ IServerTemplateCardProps) => {
     >
       <div className="flex items-center gap-3">
         {/* <TemplateIcon /> */}
-        <h1 className="font-semibold">{templateName}</h1>
+        <h1 className="font-semibold">{template?.templateType}</h1>
       </div>
       <div className="text-gray-600">
         <FaChevronRight />

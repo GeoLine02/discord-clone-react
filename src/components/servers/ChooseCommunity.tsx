@@ -32,13 +32,13 @@ const ChooseCommunity = ({
           </p>
         </div>
         <div className="flex flex-col gap-4 mt-4">
-          {serverMemberOptions.map((option: string) => (
+          {serverMemberOptions.map((option: any) => (
             <ServerTemplateCard
               stepName="serverName"
               handleSetSteps={handleSetSteps}
               setServerTemplate={setServerMembersType}
-              templateName={option}
-              key={option}
+              template={option}
+              key={option.templateType}
             />
           ))}
           <p className="text-gray-400 text-center text-sm">

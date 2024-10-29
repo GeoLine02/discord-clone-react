@@ -1,13 +1,13 @@
 import { useState } from "react";
 import { sendFrindRequest } from "../../services/friends";
-import { socket, useAuth } from "../../context/AuthProvider";
+import { getSocket, useAuth } from "../../context/AuthProvider";
 const AddFriendInput = () => {
   const [isFocused, setIsFocused] = useState<boolean>(false);
   const [username, setUsername] = useState<string>("");
   const [sendingStatus, setSendingStatus] = useState<string | null>(null);
   const { user } = useAuth();
   const senderId = user?.id;
-
+  const socket = getSocket();
   const handleSendFriendRequest = async () => {
     try {
       const res = await sendFrindRequest(senderId, username);

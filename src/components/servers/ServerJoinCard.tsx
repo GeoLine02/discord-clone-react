@@ -7,7 +7,7 @@ interface IServerJoinCardProps {
   serverName: string;
   receiverId: number;
   server: IServer;
-  handleAcceptServerInvitation: (
+  handleAcceptServerInvitation?: (
     serverName: string,
     id: number,
     server: IServer
@@ -34,7 +34,7 @@ const ServerJoinCard = ({
       </div>
       {receiverId !== user?.id && (
         <button
-          onClick={() => handleAcceptServerInvitation(serverName, id, server)}
+          onClick={() => handleAcceptServerInvitation?.(serverName, id, server)}
           className="bg-green-500 py-2 px-5 rounded-md"
         >
           join

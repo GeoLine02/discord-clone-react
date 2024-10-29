@@ -1,26 +1,8 @@
 import api from "../../config/axios";
 
-export const getServersByOnwer = async (ownerId: number) => {
+export const getServers = async (userId: number, serverId: number) => {
   try {
-    const res = await api.get(`/server/by-owner?ownerId=${ownerId}`, {
-      headers: { "Content-Type": "application/json" },
-    });
-
-    if (res.data && res.status === 200) {
-      return res.data;
-    }
-
-    if (res.status === 404) {
-      return res.data.message;
-    }
-  } catch (error) {
-    console.log(error);
-  }
-};
-
-export const getServers = async (userId: number) => {
-  try {
-    const res = await api.get(`/server?userId=${userId}`, {
+    const res = await api.get(`/server?userId=${userId}&serverId=${serverId}`, {
       headers: { "Content-Type": "application/json" },
     });
     if (res && res.data) {
@@ -45,7 +27,7 @@ export const getServerById = async (serverId: number) => {
 };
 
 export const createServer = async (
-  serverTemplate: string,
+  serverTemplate: any,
   serverCommunity: string,
   serverName: string,
   ownerId: number,
@@ -61,8 +43,8 @@ export const createServer = async (
         },
       }
     );
-
-    return res.data.message;
+    console.log("@@@@@@@@@@@@@@@res.data: ", res.data);
+    return res.data;
   } catch (error) {
     console.log(error);
   }

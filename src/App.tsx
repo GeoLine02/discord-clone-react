@@ -11,6 +11,7 @@ import SideBar from "./components/layout/SideBar";
 import Header from "./components/layout/Header";
 import ServerByName from "./pages/ServerByName";
 import FriendById from "./pages/FriendById";
+import ChannelMessagesPage from "./pages/ChannelMessagesPage";
 function App() {
   axios.defaults.withCredentials = true;
   return (
@@ -20,11 +21,16 @@ function App() {
         <Header />
         <Routes>
           <Route element={<ProtectedRoute />}>
-            <Route index element={<Channels />} path={routes.CHANNEL} />
+            <Route element={<Channels />} path={routes.CHANNEL} />
             <Route
               element={<ServerByName />}
               path={`${routes.CHANNEL}/:serverId`}
-            />
+            >
+              <Route
+                element={<ChannelMessagesPage />}
+                path=":text/:channelName"
+              />
+            </Route>
             <Route
               element={<FriendById />}
               path={`${routes.CHANNEL}/friend-id/:id`}

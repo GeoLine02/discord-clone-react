@@ -13,7 +13,6 @@ interface IMessageProps {
 
 const Message = ({ message, handleAcceptServerInvitation }: IMessageProps) => {
   const { content, sender, contentType, id, server } = message;
-  console.log("@@@@@@@@@@@", message);
   return (
     <div>
       {contentType === "text" && (

@@ -5,7 +5,7 @@ import { IoSearchSharp } from "react-icons/io5";
 import { useFriendRequests } from "../../context/FriendsProvider";
 import ServerInvitationCard from "./ServerInvitationCard";
 // import { joinServerByRequest } from "../../services/servers";
-import { socket, useAuth } from "../../context/AuthProvider";
+import { getSocket, useAuth } from "../../context/AuthProvider";
 import { useParams } from "react-router-dom";
 import { IFriend } from "../../types/friends";
 import { useServer } from "../../context/ServerProvider";
@@ -28,7 +28,7 @@ const ServerInvitationModal = ({
   const copyInvitationLink = () => {
     navigator.clipboard.writeText(invitationLink);
   };
-
+  const socket = getSocket();
   // const handleServerInvitationByUrl = async (friendId: number) => {
   //   try {
   //     const res = await joinServerByRequest(

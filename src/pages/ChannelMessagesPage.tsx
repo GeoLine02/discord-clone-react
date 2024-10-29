@@ -1,25 +1,25 @@
 import { useEffect, useRef, useState } from "react";
 import ChatInput from "../components/shared/ChatInput";
 import MessageList from "../components/shared/MessageList";
-import { useChat } from "../context/ChatProvider";
-import { useAuth } from "../context/AuthProvider";
+import { getSocket, useAuth } from "../context/AuthProvider";
 import { getServerById } from "../services/servers";
 import { IServer } from "../types/servers";
 import { useParams } from "react-router-dom";
-import { getChannelMessages } from "../services/channels";
+import { useChat } from "../context/ChatProvider";
+import { getChannelMessages } from "../services/messages";
+import useScrollToView from "../hooks/useScrollToView";
+import { IServerMessage } from "../types/messages";
 
 const ChannelMessagesPage = () => {
-  const { serverMessages, setServerMessages } = useChat();
   const [message, setMessage] = useState<string>("");
   const { user } = useAuth();
-  const inputRef = useRef<HTMLInputElement>(null);
-  const scrollRef = useRef<HTMLDivElement>(null);
+  const inputRef = useRef<HTMLInputElement | null>(null);
   const formRef = useRef<HTMLFormElement>(null);
   const [serverByName, setServerByName] = useState<IServer | null>(null);
   const { serverId, channelName } = useParams();
-  const [channelMessages, setChannelMessages] = useState<[] | any[]>([]);
-
-  console.log("channel messages", channelMessages);
+  const { serverMessageList, setServerMessageList } = useChat();
+  const socket = getSocket();
+  const [channelMessages, setChannelMessages] = useState([]);
 
   useEffect(() => {
     const fetchServerById = async () => {
@@ -34,28 +34,14 @@ const ChannelMessagesPage = () => {
     fetchServerById();
   }, [serverId]);
 
-  const handleSubmitForm = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    const sentDate = Date.now();
-    const liveMessageId = serverMessages?.reverse()[0]?.id + 1 || 1;
+  const filteredMessages = serverMessageList.filter(
+    (message: any) => message?.serverId === Number(serverId)
+  );
 
-    const messageObj = {
-      id: liveMessageId,
-      sender: user,
-      serverId: Number(serverId),
-      content: message,
-      contentType: "text",
-      sentDate,
-      serverName: serverByName?.serverName,
-    };
-
-    if (message) {
-      formRef.current?.reset();
-      scrollRef.current?.scrollIntoView({ behavior: "smooth" });
-      setMessage("");
-      setServerMessages([...serverMessages, messageObj]);
-    }
-  };
+  const [scrollRef] = useScrollToView({
+    messageList: serverMessageList,
+    setMessageList: setServerMessageList,
+  });
 
   useEffect(() => {
     const fetchChannelMessages = async () => {
@@ -64,15 +50,37 @@ const ChannelMessagesPage = () => {
           Number(serverId),
           channelName as string
         );
-        setChannelMessages(res);
+        setServerMessageList(res);
       } catch (error) {
         console.log(error);
       }
     };
-    if (user) {
-      fetchChannelMessages();
+    fetchChannelMessages();
+  }, [serverId, channelName]);
+
+  const handleSubmitForm = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    const liveMessageId =
+      [...(serverMessageList || [])].reverse()[0]?.id + 1 || 1;
+
+    const messageObj = {
+      id: liveMessageId,
+      sender: user,
+      serverId: Number(serverId),
+      content: message,
+      contentType: "text",
+      serverName: serverByName?.serverName,
+      channelName: channelName,
+    };
+
+    if (message) {
+      formRef.current?.reset();
+      scrollRef.current?.scrollIntoView({ behavior: "smooth" });
+      setMessage("");
+      socket.emit("send-message-to-channel", messageObj);
     }
-  }, [serverId, channelName, user]);
+  };
 
   return (
     <>
@@ -81,7 +89,7 @@ const ChannelMessagesPage = () => {
         onSubmit={handleSubmitForm}
         className="p-3 flex flex-col text-white justify-between h-[94%]"
       >
-        <MessageList messageList={channelMessages} />
+        <MessageList messageList={filteredMessages} ref={scrollRef} />
         <ChatInput message={message} setMessage={setMessage} ref={inputRef} />
       </form>
     </>

@@ -25,12 +25,16 @@ const ServerByName = () => {
   }, [serverId]);
 
   useEffect(() => {
-    navigate(`${routes.CHANNEL}/${serverId}/general`);
-  }, [serverId, navigate]);
+    navigate(`${routes.CHANNEL}/${serverId}/text/general`);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [serverId]);
 
   return (
     <div className="min-h-screen max-h-screen flex bg-secondary-gray">
-      <ServerSideBar serverName={serverByName?.serverName as string} />
+      <ServerSideBar
+        serverByName={serverByName as IServer}
+        serverName={serverByName?.serverName as string}
+      />
       <div className="w-full min-h-full">
         <ServerHeader />
         <Outlet />

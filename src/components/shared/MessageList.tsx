@@ -17,7 +17,6 @@ interface IMessageListProps {
 
 const MessageList = forwardRef<HTMLDivElement, IMessageListProps>(
   ({ handleAcceptServerInvitation, messageList }, ref) => {
-    console.log(messageList);
     return (
       <div className="overflow-y-auto flex flex-col gap-3">
         {messageList?.map((message: IMessage | IServerMessage) => (
@@ -33,7 +32,5 @@ const MessageList = forwardRef<HTMLDivElement, IMessageListProps>(
     );
   }
 );
-
-MessageList.displayName = "MessageList"; // Optional, for better debugging
 
 export default MessageList;

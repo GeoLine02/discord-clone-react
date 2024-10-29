@@ -26,7 +26,10 @@ function App() {
               element={<ServerByName />}
               path={`${routes.CHANNEL}/:serverId`}
             >
-              <Route element={<ChannelMessagesPage />} path=":channelName" />
+              <Route
+                element={<ChannelMessagesPage />}
+                path=":text/:channelName"
+              />
             </Route>
             <Route
               element={<FriendById />}

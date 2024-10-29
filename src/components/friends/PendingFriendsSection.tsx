@@ -1,4 +1,4 @@
-import { socket, useAuth } from "../../context/AuthProvider";
+import { getSocket, useAuth } from "../../context/AuthProvider";
 import { useFriendRequests } from "../../context/FriendsProvider";
 import {
   acceptFriendRequest,
@@ -11,6 +11,7 @@ const PendingFriendsSection = () => {
   const { friendRequests, setFriendList, friendList, setFriendRequests } =
     useFriendRequests();
   const { user } = useAuth();
+  const socket = getSocket();
 
   const handleAcceptFriendRequest = async (senderId: number) => {
     try {

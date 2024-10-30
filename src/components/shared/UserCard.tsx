@@ -6,7 +6,6 @@ interface IUserCardProps {
   iconSize?: number;
 }
 const UserCard = ({ user, iconSize }: IUserCardProps) => {
-  console.log("12312312321", user);
   return (
     <div className="flex items-center gap-3">
       <div className="bg-green-500 p-2 aspect-square rounded-full flex items-center justify-center">

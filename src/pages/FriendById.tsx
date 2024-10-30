@@ -43,7 +43,7 @@ const FriendById = () => {
   const handleSubmitForm = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const sentDate = Date.now();
-    const liveMessageId = messageList?.reverse()[0]?.id + 1 || 1;
+    const liveMessageId = [...(messageList || [])].reverse()[0]?.id + 1 || 1;
     const messageObj = {
       id: liveMessageId,
       sender: user,

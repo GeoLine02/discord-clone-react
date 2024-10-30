@@ -1,8 +1,12 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useState, useEffect, useContext, createContext } from "react";
 import { useAuth, getSocket } from "./AuthProvider";
-import { getAllFriendRequests, getFriendList } from "../services/friends";
-import { IFriendRequest } from "../types/friends";
+import {
+  getAllFriendRequests,
+  getFriendList,
+  showDMVisibleFriends,
+} from "../services/friends";
+import { IFriend, IFriendRequest } from "../types/friends";
 
 const FriendsContext = createContext<any>(undefined);
 
@@ -21,8 +25,9 @@ const FriendRequestsProvider = ({
   children: React.ReactNode;
 }) => {
   const [friendRequests, setFriendRequests] = useState<any>([]);
-  const [friendList, setFriendList] = useState<any>([]);
+  const [friendList, setFriendList] = useState<[] | IFriend[]>([]);
   const [onlineFrindsList, setOnlineFriendsList] = useState<any>([]);
+  const [dmVisibleFrinds, setDmVisibleFriends] = useState<[] | any[]>([]);
   const { user } = useAuth();
   const socket = getSocket();
   useEffect(() => {
@@ -78,6 +83,29 @@ const FriendRequestsProvider = ({
   }, [user]);
 
   useEffect(() => {
+    socket.on("deleted-friend", (userId) => {
+      const filteredFriends = friendList.filter(
+        (friend: IFriend) => friend?.Friend?.id === userId
+      );
+      setFriendList(filteredFriends);
+    });
+  }, [user]);
+
+  useEffect(() => {
+    const fetchDmVisibleFrinds = async () => {
+      try {
+        const res = await showDMVisibleFriends(user?.id as number);
+        setDmVisibleFriends(res);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    if (user) {
+      fetchDmVisibleFrinds();
+    }
+  }, [user]);
+
+  useEffect(() => {
     if (user) {
       socket.on("friend-request-accepted", (user) => {
         if (user) {
@@ -98,6 +126,8 @@ const FriendRequestsProvider = ({
         friendList,
         setFriendList,
         setFriendRequests,
+        setDmVisibleFriends,
+        dmVisibleFrinds,
       }}
     >
       {children}

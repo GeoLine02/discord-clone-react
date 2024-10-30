@@ -76,3 +76,33 @@ export const rejectFriendRequest = async (
     console.log(error);
   }
 };
+
+export const showDMVisibleFriends = async (userId: number) => {
+  try {
+    const res = await api.get(`friend/dm-visible-friends?userId=${userId}`);
+    if (res && res.data) {
+      return res.data;
+    }
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const updateFriendDmVisibility = async (params: {
+  userId: number;
+  friendId: number;
+  visibility: boolean;
+}) => {
+  try {
+    const res = await api.patch("/friend/dm-visible-friends/update", params, {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    if (res && res.data) {
+      return res.data;
+    }
+  } catch (error) {
+    console.log(error);
+  }
+};

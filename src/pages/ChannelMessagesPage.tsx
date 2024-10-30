@@ -19,7 +19,6 @@ const ChannelMessagesPage = () => {
   const { serverId, channelName } = useParams();
   const { serverMessageList, setServerMessageList } = useChat();
   const socket = getSocket();
-  const [channelMessages, setChannelMessages] = useState([]);
 
   useEffect(() => {
     const fetchServerById = async () => {
@@ -35,7 +34,7 @@ const ChannelMessagesPage = () => {
   }, [serverId]);
 
   const filteredMessages = serverMessageList.filter(
-    (message: any) => message?.serverId === Number(serverId)
+    (message: IServerMessage) => message?.serverId === Number(serverId)
   );
 
   const [scrollRef] = useScrollToView({
@@ -56,6 +55,7 @@ const ChannelMessagesPage = () => {
       }
     };
     fetchChannelMessages();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [serverId, channelName]);
 
   const handleSubmitForm = (e: React.FormEvent<HTMLFormElement>) => {

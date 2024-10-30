@@ -6,12 +6,9 @@ const AllFriendsSection = () => {
   const { friendList } = useFriendRequests();
   return (
     <div className="w-4/6">
-      {friendList.map(
-        (friend: IFriend) => (
-          console.log(friend),
-          (<FriendCard key={friend?.Friend?.id} friend={friend?.Friend} />)
-        )
-      )}
+      {friendList.map((friend: IFriend) => (
+        <FriendCard key={friend?.Friend?.id} friend={friend?.Friend} />
+      ))}
     </div>
   );
 };

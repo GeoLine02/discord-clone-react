@@ -9,6 +9,7 @@ import api from "../config/axios";
 import { io, Socket } from "socket.io-client";
 import { IUser } from "../types/user";
 import { DefaultEventsMap } from "@socket.io/component-emitter";
+import { logout } from "../services/users";
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const AuthContext = createContext<any>(undefined);
 // eslint-disable-next-line react-refresh/only-export-components
@@ -34,7 +35,6 @@ export const useAuth = () => {
 const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const [token, setToken] = useState<undefined | null | string>();
   const [user, setUser] = useState<null | IUser>(null);
-  console.log(user);
   useEffect(() => {
     const fetchUser = async () => {
       try {
@@ -51,6 +51,12 @@ const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       }
     };
     fetchUser();
+
+    return () => {
+      if (socket) {
+        socket.disconnect();
+      }
+    };
   }, []);
 
   useLayoutEffect(() => {
@@ -98,8 +104,36 @@ const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     };
   }, [token]);
 
+  const logOut = async () => {
+    try {
+      const res = await logout();
+
+      if (res) {
+        setToken(null);
+        setUser(null);
+        if (socket) {
+          socket.disconnect();
+        }
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    const handleBeforeUnload = () => {
+      socket.disconnect();
+    };
+
+    window.addEventListener("beforeunload", handleBeforeUnload);
+
+    return () => {
+      window.removeEventListener("beforeunload", handleBeforeUnload);
+    };
+  }, []);
+
   return (
-    <AuthContext.Provider value={{ setToken, token, user }}>
+    <AuthContext.Provider value={{ setToken, token, user, logOut }}>
       {children}
     </AuthContext.Provider>
   );

@@ -1,8 +1,8 @@
 import { FaHashtag } from "react-icons/fa";
 import { FaBell } from "react-icons/fa6";
 import { FaUserFriends } from "react-icons/fa";
-import { BiSolidInbox } from "react-icons/bi";
 import { IoHelpCircle } from "react-icons/io5";
+import Inbox from "../inbox/Inbox";
 
 const ServerHeader = () => {
   return (
@@ -16,7 +16,7 @@ const ServerHeader = () => {
       <section className="text-white flex items-center gap-2">
         <FaBell size={25} />
         <FaUserFriends size={30} />
-        <BiSolidInbox size={30} />
+        <Inbox />
         <IoHelpCircle size={30} />
       </section>
     </header>

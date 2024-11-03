@@ -28,7 +28,7 @@ const FriendList = () => {
   };
 
   return (
-    <div>
+    <div className="min-h-[60%] overflow-y-auto">
       {dmVisibleFrinds?.map((friend: IFriend) => (
         <Friend
           key={uuidv4()}

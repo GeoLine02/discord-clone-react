@@ -23,7 +23,6 @@ const ReigsterForm = ({
   userCredentialsError,
   userCredentials,
 }: IRegisterFormProps) => {
-  console.log(userCredentials);
   return (
     <form onSubmit={handleRegister} className="flex flex-col gap-5">
       <Input

@@ -4,7 +4,6 @@ import { useState } from "react";
 import { IoSearchSharp } from "react-icons/io5";
 import { useFriendRequests } from "../../context/FriendsProvider";
 import ServerInvitationCard from "./ServerInvitationCard";
-// import { joinServerByRequest } from "../../services/servers";
 import { getSocket, useAuth } from "../../context/AuthProvider";
 import { useParams } from "react-router-dom";
 import { IFriend } from "../../types/friends";
@@ -29,24 +28,16 @@ const ServerInvitationModal = ({
     navigator.clipboard.writeText(invitationLink);
   };
   const socket = getSocket();
-  // const handleServerInvitationByUrl = async (friendId: number) => {
-  //   try {
-  //     const res = await joinServerByRequest(
-  //       user?.id,
-  //       friendId,
-  //       Number(serverId)
-  //     );
-  //     return res;
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // };
+
   const handleServerInvitation = (friendId: number) => {
     // find receiver from friends list
     const receiver = friendList.find(
       (friend: IFriend) => friend.Friend.id === friendId
     );
-    const server = servers.find((server) => server.id === Number(serverId));
+    const server = servers.find(
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      (server: any) => server.id === Number(serverId)
+    );
     socket.emit("send-server-invitation", {
       server,
       serverId: Number(serverId),

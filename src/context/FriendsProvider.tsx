@@ -28,15 +28,22 @@ const FriendRequestsProvider = ({
   const [friendList, setFriendList] = useState<[] | IFriend[]>([]);
   const [onlineFrindsList, setOnlineFriendsList] = useState<any>([]);
   const [dmVisibleFrinds, setDmVisibleFriends] = useState<[] | any[]>([]);
+  console.log("onlineFrindsList", onlineFrindsList);
   const { user } = useAuth();
   const socket = getSocket();
   useEffect(() => {
     if (user) {
-      socket.on("get-online-friends", (onlineFriends) => {
-        setOnlineFriendsList([...onlineFrindsList, onlineFriends]);
+      socket.emit("get-online-friends", friendList, user);
+    }
+  }, [user, friendList, socket]);
+
+  useEffect(() => {
+    if (user) {
+      socket.on("receive-online-friends", (onlineFriends) => {
+        setOnlineFriendsList(onlineFriends);
       });
     }
-  }, [user]);
+  }, [setOnlineFriendsList, socket, user]);
 
   useEffect(() => {
     const fetchFriends = async () => {
@@ -127,7 +134,9 @@ const FriendRequestsProvider = ({
         setFriendList,
         setFriendRequests,
         setDmVisibleFriends,
+        setOnlineFriendsList,
         dmVisibleFrinds,
+        onlineFrindsList,
       }}
     >
       {children}

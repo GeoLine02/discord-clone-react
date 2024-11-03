@@ -1,6 +1,7 @@
 import { createContext, useEffect, useContext, useState } from "react";
 import { getSocket } from "./AuthProvider";
 import { IMessage, IServerMessage } from "../types/messages";
+import MessageSound from "../assets/sounds/Discord notification - sound effect.mp3";
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const ChatContext = createContext<any>(null);
@@ -21,9 +22,12 @@ const ChatProvider = ({ children }: { children: React.ReactNode }) => {
     [] | IServerMessage[]
   >([]);
   const socket = getSocket();
+  const messageNotificationSound = new Audio(MessageSound);
+
   useEffect(() => {
     socket.on("message-received-from-friend", (messageObj) => {
       setMessageList([...messageList, messageObj]);
+      messageNotificationSound.play();
     });
   }, [messageList]);
 

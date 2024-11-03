@@ -56,7 +56,7 @@ const Channels = ({ serverByName }: IChannelsProps) => {
   };
 
   return (
-    <div className="px-2 space-y-2">
+    <div className="px-2 space-y-2 md:max-h-[65vh] lg:max-h-[70vh] overflow-y-auto">
       <TextChannelsList
         handleToogleChannelCreateModal={handleToogleChannelCreateModal}
         channels={channels as IChannel[]}

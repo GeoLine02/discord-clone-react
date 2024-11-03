@@ -35,3 +35,19 @@ export const reigsterUser = async (
     console.log(error);
   }
 };
+
+export const logout = async () => {
+  try {
+    const resp = await api.get("/user/logout", {
+      // headers: {
+      //   "Content-Type": "application/json",
+      // },
+    });
+    console.log("resp: ", resp);
+    if (resp && resp.data) {
+      return resp.data;
+    }
+  } catch (error) {
+    console.log(error);
+  }
+};

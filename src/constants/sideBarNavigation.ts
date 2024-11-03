@@ -12,12 +12,12 @@ const sideBarNavigation = [
   {
     title: "Nitro",
     icon: TiRefreshOutline,
-    path: routes.NITRO,
+    path: routes.CHANNEL,
   },
   {
     title: "Shop",
     icon: CiShop,
-    path: routes.SHOP,
+    path: routes.CHANNEL,
   },
 ];
 

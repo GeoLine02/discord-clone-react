@@ -59,6 +59,7 @@ const ChannelMessagesPage = () => {
   }, [serverId, channelName]);
 
   const handleSubmitForm = (e: React.FormEvent<HTMLFormElement>) => {
+    // prevents form default behavior
     e.preventDefault();
 
     const liveMessageId =

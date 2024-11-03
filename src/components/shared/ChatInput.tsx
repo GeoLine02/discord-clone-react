@@ -17,8 +17,7 @@ const ChatInput = forwardRef<HTMLInputElement, IChatInputProps>(
       setIsEmojiDisplayed(!isEmojiDisplayed);
     };
 
-    const getEmojiUrl = (emojiData: EmojiClickData, event: MouseEvent) => {
-      console.log(emojiData);
+    const getEmojiUrl = (emojiData: EmojiClickData) => {
       setIsEmojiDisplayed(false);
       setMessage((prev: string) => `${prev} ${emojiData.emoji}`);
     };

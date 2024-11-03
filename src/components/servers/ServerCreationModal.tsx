@@ -20,7 +20,6 @@ const ServerCreationModal = ({
 }: IServerCreationModalprops) => {
   const { user } = useAuth();
   const [serverTemplate, setServerTemplate] = useState<any>(null);
-  console.log("serverTemplate", serverTemplate);
   const [serverMembersType, setServerMembersType] = useState<string>("");
   const [serverImage, setServerImage] = useState<File | null>(null);
   const [isloading, setIsLoading] = useState<boolean>(false);

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import FriendsHeader from "../components/friends/FriendsHeader";
 import AllFriendsSection from "../components/friends/AllFriendsSection";
 import OnlineFriendsSection from "../components/friends/OnlineFriendsSection";
@@ -7,7 +7,11 @@ import AddFriendSection from "../components/friends/AddFriendSection";
 import FriendsSideBar from "../components/layout/FriendsSideBar";
 
 const Channels = () => {
-  const [showSection, setShowSection] = useState<string>("online");
+  const [showSection, setShowSection] = useState<string>("all");
+
+  useEffect(() => {
+    setShowSection("Online");
+  }, []);
   return (
     <div className="flex max-h-screen w-full bg-secondary-gray">
       <FriendsSideBar />

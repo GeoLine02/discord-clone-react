@@ -69,7 +69,7 @@ const Login = () => {
             handleLogin={handleLogin}
           />
         </section>
-        <section className="flex flex-col items-center justify-center gap-4">
+        <section className="md:flex hidden flex-col items-center justify-center gap-4">
           <img src={QRCode} alt="QR code" />
           <h1>Log in wiht QR Code</h1>
           <p className="max-w-52 text-center">

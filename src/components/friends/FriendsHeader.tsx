@@ -1,6 +1,7 @@
-import { FaInbox, FaUserFriends } from "react-icons/fa";
+import { FaUserFriends } from "react-icons/fa";
 import { IoIosHelpCircle } from "react-icons/io";
 import friendFilterOptions from "../../constants/friendFilterOptions";
+import Inbox from "../inbox/Inbox";
 
 interface FriendsHeaderProps {
   setShowSection: React.Dispatch<React.SetStateAction<string>>;
@@ -29,7 +30,7 @@ const FriendsHeader = ({ setShowSection }: FriendsHeaderProps) => {
         </div>
       </section>
       <section className="flex items-center gap-3">
-        <FaInbox size={30} />
+        <Inbox />
         <IoIosHelpCircle size={30} />
       </section>
     </header>

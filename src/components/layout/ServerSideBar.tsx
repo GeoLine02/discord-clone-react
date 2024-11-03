@@ -1,6 +1,5 @@
 import { useAuth } from "../../context/AuthProvider";
-import { FaMicrophone, FaCog, FaAngleDown } from "react-icons/fa";
-import { FaHeadphones } from "react-icons/fa6";
+import { FaAngleDown, FaDiscord } from "react-icons/fa";
 import { useState } from "react";
 import ServerMenu from "../serverByName/ServerMenu";
 import { IoClose } from "react-icons/io5";
@@ -8,6 +7,7 @@ import Modal from "../ui/Modal";
 import ServerInvitationModal from "../serverByName/ServerInvitationModal";
 import Channels from "../channels/Channels";
 import { IServer } from "../../types/servers";
+import SideBarTools from "../shared/SideBarTools";
 
 interface IServerSideBarProps {
   serverName: string;
@@ -55,23 +55,15 @@ const ServerSideBar = ({ serverName, serverByName }: IServerSideBarProps) => {
       <footer className="bg-primary-gray py-2 px-2 flex justify-between">
         {/* profile */}
         <div className="flex gap-1 rounded-md hover:bg-hover-gray cursor-pointer items-center p-1">
-          <div className="bg-pink-500 min-w-9 h-9 aspect-square rounded-full"></div>
-          <div className="text-sm">
+          <div className="bg-pink-500 min-w-9 h-9 aspect-square rounded-full flex items-center justify-center">
+            <FaDiscord size={25} className="text-white" />
+          </div>
+          <div className="text-sm text-white">
             <h1>{user?.username}</h1>
             <h2>Online</h2>
           </div>
         </div>
-        <div className="text-white flex items-center gap-2">
-          <div className="hover:bg-hover-gray p-2 rounded-md">
-            <FaMicrophone />
-          </div>
-          <div className="hover:bg-hover-gray p-2 rounded-md">
-            <FaHeadphones />
-          </div>
-          <div className="hover:bg-hover-gray p-2 rounded-md">
-            <FaCog />
-          </div>
-        </div>
+        <SideBarTools />
       </footer>
       {dispalyInvitationModal && (
         <Modal>

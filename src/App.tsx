@@ -1,5 +1,5 @@
 import "./App.css";
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes, useLocation } from "react-router-dom";
 import routes from "./constants/routes";
 import Home from "./pages/Home";
 import Register from "./pages/Register";
@@ -14,9 +14,14 @@ import FriendById from "./pages/FriendById";
 import ChannelMessagesPage from "./pages/ChannelMessagesPage";
 function App() {
   axios.defaults.withCredentials = true;
+  const location = useLocation();
   return (
     <div className="flex max-w-[100vw] max-h-[100vh]">
-      <SideBar />
+      {location.pathname === routes.HOME ||
+      location.pathname === routes.LOGIN ||
+      location.pathname === routes.REGISTER ? null : (
+        <SideBar />
+      )}
       <div className="w-full">
         <Header />
         <Routes>

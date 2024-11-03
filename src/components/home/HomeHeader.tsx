@@ -9,7 +9,6 @@ const HomeHeader = () => {
   const { user } = useAuth();
   const navigate = useNavigate();
   const [isMenuVisible, setIsMenuVisible] = useState<boolean>(false);
-  console.log("isMenuVisible", isMenuVisible);
   return (
     <header className="bg-primary-blue text-white">
       <div className="flex items-center justify-between max-w-[1440px] mx-auto p-3">

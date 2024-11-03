@@ -17,7 +17,6 @@ interface IFriendCardProps {
 }
 
 const FriendCard = ({ friend }: IFriendCardProps) => {
-  console.log("friend: ", friend);
   const navigate = useNavigate();
   const { setDmVisibleFriends, friendList, setFriendList } =
     useFriendRequests();

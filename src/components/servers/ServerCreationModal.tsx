@@ -19,6 +19,7 @@ const ServerCreationModal = ({
   setToggleServerCreationModal,
 }: IServerCreationModalprops) => {
   const { user } = useAuth();
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [serverTemplate, setServerTemplate] = useState<any>(null);
   const [serverMembersType, setServerMembersType] = useState<string>("");
   const [serverImage, setServerImage] = useState<File | null>(null);

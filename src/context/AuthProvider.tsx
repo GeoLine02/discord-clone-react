@@ -17,7 +17,9 @@ export const AuthContext = createContext<any>(undefined);
 let socket: Socket<DefaultEventsMap, DefaultEventsMap>;
 export const getSocket = () => {
   if (!socket) {
-    socket = io(import.meta.env.VITE_APP_API_BASE_URL);
+    socket = io(import.meta.env.VITE_APP_API_BASE_URL, {
+      withCredentials: true,
+    });
   }
   return socket;
 };

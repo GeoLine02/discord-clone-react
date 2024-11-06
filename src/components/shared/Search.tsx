@@ -8,7 +8,12 @@ interface ISearchProps {
 const Search = ({ placeholder, setSearchValue }: ISearchProps) => {
   return (
     <div>
-      <Input placeholder={placeholder} setValue={setSearchValue} />
+      <Input
+        hasBorder={true}
+        value={""}
+        placeholder={placeholder}
+        setValue={setSearchValue}
+      />
     </div>
   );
 };

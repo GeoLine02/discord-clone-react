@@ -9,7 +9,9 @@ const validateForm = async (validationSchema: any, values: any) => {
     if (err instanceof yup.ValidationError) {
       const errors = err.inner.reduce(
         (acc: any, error: yup.ValidationError) => {
-          acc[error.path] = error.message;
+          if (error && error.path) {
+            acc[error.path] = error.message;
+          }
           return acc;
         },
         {}

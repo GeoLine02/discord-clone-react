@@ -75,7 +75,7 @@ const FriendRequestsProvider = ({
     if (user) {
       socket.on(
         "receive-friend-request",
-        (Sender, senderUsername, receiverUsername, senderId, status) => {
+        (Sender, senderUsername, _, senderId, status) => {
           if (senderUsername && senderId) {
             const request: IFriendRequest = {
               Sender,
